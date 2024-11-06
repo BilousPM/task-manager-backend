@@ -37,4 +37,3 @@ export const deleteColumnController = async (req, res) => {
     message: 'Column deleted successfully',
   });
 };
-z;
