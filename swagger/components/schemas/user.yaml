@@ -1,0 +1,21 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: 66f8ce62907b1bc9bc45a365
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+  email:
+    description: "User's email"
+    type: string
+    example: testcontact@mail.com
+  photo:
+    description: "Link to User's photo"
+    type: string
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png

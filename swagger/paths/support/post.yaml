@@ -1,0 +1,49 @@
+tags:
+  - Support
+summary: Send email to support
+operationId: sendEmailToSupport
+description: 'Create a contact with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - email
+          - message
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: testuser@mail.com
+          message:
+            description: "Message that will be sent to support"
+            type: string
+
+responses:
+  '201':
+    description: Creates a contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'

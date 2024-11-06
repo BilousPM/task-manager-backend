@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Tasks_Manager app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description:
+    This is a documentation of Personal Task's Manager app
+tags:
+  - name: Auth
+    description: Auth operations.
+  - name: Support
+    description: Operations about users support
+servers:
+  - url: http://localhost:3000
+  - url: https://example.com/api/v1
+paths:
+  /support/send-message:
+    post:
+      $ref: ../swagger/paths/support/post.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

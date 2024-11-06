@@ -6,8 +6,11 @@ export const createColumn = (titleColumn, userId, boardId) =>
 export const getAllColumnsByBoardId = (boardId) =>
   ColumnsCollection.find({ boardId: boardId });
 
+
 export const updateColumn = (columnId, titleColumn) =>
   ColumnsCollection.findByIdAndUpdate(columnId, { titleColumn }, { new: true });
 
 export const deleteColumn = (columnId) =>
   ColumnsCollection.findByIdAndDelete(columnId);
+
+

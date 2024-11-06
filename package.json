@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs",
     "lint": "eslint src/**/*.js",
     "start": "node ./src/index.js",
     "dev": "nodemon src/index.js"
@@ -13,8 +16,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "eslint": "^9.13.0",
+    "@eslint/js": "^9.14.0",
+    "@redocly/cli": "^1.25.10",
+    "eslint": "^9.14.0",
     "globals": "^15.11.0",
     "nodemon": "^3.1.7",
     "pino-pretty": "^11.3.0"
@@ -24,25 +28,19 @@
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "google-auth-library": "^9.14.2",
     "handlebars": "^4.7.8",
     "http-errors": "^2.0.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.8.1",
-    "mongoose": "^8.6.1",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.15",
-    "pino-http": "^10.3.0",
-    "swagger-ui-express": "^5.0.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "http-errors": "^2.0.0",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
-    "pino-http": "^10.3.0"
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "pino-http": "^10.3.0",
+    "swagger-ui-express": "^5.0.1"
   }
 }

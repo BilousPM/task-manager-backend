@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import { MONGO_DB_VARS } from '../constants/index.js';
+
 import { env } from '../utils/env.js';
+import { MONGO_DB_VARS } from '../constants/index.js';
 
 export const initMongoConnection = async () => {
   try {
@@ -18,3 +19,5 @@ export const initMongoConnection = async () => {
     throw e;
   }
 };
+
+
