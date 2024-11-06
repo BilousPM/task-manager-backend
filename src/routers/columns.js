@@ -16,14 +16,14 @@ columnsRouter.use('/', authenticate);
 
 columnsRouter.post(
   '/:boardId',
-  isValidId,
+  // isValidId,
   validateBody(createColumnsSchema),
   ctrlWrapper(createColumnController),
 );
 
 columnsRouter.put(
   '/',
-  isValidId,
+  // isValidId,
   validateBody(createColumnsSchema),
   ctrlWrapper(updateColumnController),
 );
