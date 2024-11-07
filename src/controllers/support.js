@@ -7,11 +7,11 @@ import fs from 'node:fs/promises';
 import handlebars from 'handlebars';
 
 export const sendSupportMessageController = async (req, res) => {
-  const email = req.body.email
-  const supportEmail = "bilouspm@gmail.com"
+  const email = req.body.email;
+  const supportEmail = "bilouspm@gmail.com";
   //  const supportEmail = "taskpro.project@gmail.com"
 
-  const sendEmailTemplatePath = path.join(TEMPLATES_DIR, 'support-email.html')
+  const sendEmailTemplatePath = path.join(TEMPLATES_DIR, 'support-email.html');
 
   const templateSource = (
     await fs.readFile(sendEmailTemplatePath)
@@ -43,5 +43,5 @@ export const sendSupportMessageController = async (req, res) => {
   res.json({
     status:200,
     message: `Hello, ${email}. Thank you for contacting our support team. We have received your request and will get in touch with you shortly to provide all necessary assistance. Best regards, Support Team`
-  })
+  });
 };

@@ -1,26 +1,77 @@
+
+import createHttpError from 'http-errors';
+import {
+  createColumn,
+  updateColumn,
+  deleteColumn,
+} from '../services/columns.js';
+import { deleteCardsById } from '../services/card.js';
+
+// ----- Create Column -----
+export const createColumnController = async (req, res) => {
+  const {title}  = req.body;
+  const { boardId } = req.params;
+  const column = await createColumn(title, boardId);
+
+  res.status(201).json({
+    status: 201,
+    messsage: 'Column created successfully',
+    data: column,
+  });
+};
+
+// ----- Update Column -----
+export const updateColumnController = async (req, res) => {
+  const titleColumn  = req.body;
+  const  {columnId } = req.params;
+  const column = await updateColumn(columnId, titleColumn);
+
+  if (!column) {
+        throw createHttpError(404, 'Not found');
+  }
+
+  res.status(201).json({
+    status: 201,
+    message: 'Column updated successfully',
+    data: column,
+  });
+};
+
+// ----- Delete Column By Id
+export const deleteColumnController = async (req, res) => {
+  const { columnId } = req.params;
+  await deleteCardsById(columnId);
+  await deleteColumn(columnId);
+
+  res.status(204).json({
+    status:204,
+    message: 'Column deleted successfully',
+  });
+};
+
 // import { boardSchema } from '../../models/board/'; // Waiting for creation of the Board model
 // import mongoose from 'mongoose';
 // import { HttpError } from 'http-errors';
 // import ctrlWrapper from '../utils/ctrlWrapper';
 
-import { createColumn } from "../services/columns.js";
+// import { createColumn } from "../services/columns.js";
 
 
-export const createColumnController = async (req,res)=>{
-const {titleColumns} = (req.body);
-const userId = req.user._id;
-const { boardId } = req.params;
-const column = await createColumn(titleColumns,userId, boardId);
+// export const createColumnController = async (req,res)=>{
+// const {titleColumns} = (req.body);
+// const userId = req.user._id;
+// const { boardId } = req.params;
+// const column = await createColumn(titleColumns,userId, boardId);
 
-console.log(column);
+// console.log(column);
 
-res.status(201).json({
-  status: 201,
-  messsage: 'Column created saccessfully',
-  data:column
-});
+// res.status(201).json({
+//   status: 201,
+//   messsage: 'Column created saccessfully',
+//   data:column
+// });
 
-};
+// };
 // const addColumnInBoard = async (req, res, next) => {
 //   const { _id } = req.user;
 //   const { boardId } = req.params;
@@ -119,3 +170,22 @@ res.status(201).json({
 //   updateColumn: ctrlWrapper(updateColumn),
 //   deleteColumn: ctrlWrapper(deleteColumn),
 // };
+
+
+
+// =========================== Контроллери що були зміннені ================
+// export const createColumnController = async (req, res) => {
+//   const { titleColumns } = req.body;
+//   const userId = req.user._id;
+//   const { boardId } = req.params;
+//   const column = await createColumn(titleColumns, userId, boardId);
+
+//   console.log(column);
+
+//   res.status(201).json({
+//     status: 201,
+//     messsage: 'Column created successfully',
+//     data: column,
+//   });
+// };
+

@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 export const userUpdateProfileSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required().email(),
-  password: Joi.string().required().min(4),
+  name: Joi.string(),
+  email: Joi.string(),
+  password: Joi.string(),
 });
 
 export const userUpdateThemeSchema = Joi.object({

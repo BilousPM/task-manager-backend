@@ -8,19 +8,19 @@ import { CardsCollection } from '../db/models/card.js';
 //import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 //import { SORT_ORDER } from '../constants/index.js';
 
-export const getAllBoards = async (user) => {
-  const boards = await BoardsCollection.find({ owner: user });
-  return boards;
-};
+// ----- Create Board -----
+export const createBoard = (payload, user) =>
+  BoardsCollection.create({
+    ...payload,
+    owner: user._id,
+  });
 
-export const getBoardById = async (boardId, user) => {
-  const board = await BoardsCollection.findById(boardId);
-  if (board.owner.toString() === user._id.toString()) {
-    return board;
-  } else {
-    return;
-  }
-};
+// ----- Get Board By Id -----
+export const getBoardById = (boardId) => BoardsCollection.findById(boardId);
+
+// ----- Get All Boards By User Id -----
+export const getAllBoards = (owner) => BoardsCollection.find({ owner });
+
 export const getAllColumnsByBoardId = async (boardId, user) => {
   const columns = await ColumnsCollection.find({
     boardId: boardId,
@@ -37,29 +37,10 @@ export const getAllCardsByBoardId = async (boardId, user) => {
   return cards;
 };
 
-export const createBoard = async (payload, user, photoUrl) => {
-  const board = await BoardsCollection.create({
-    ...payload,
-    owner: user._id,
-    background: photoUrl,
-  });
-
-  return board;
-};
-
-export const deleteBoard = async (boardId, userId) => {
-  const board = await BoardsCollection.findOneAndDelete({
-    _id: boardId,
-    owner: userId,
-  });
-
-  return board;
-};
-
 export const deleteCards = async (boardId, userId) => {
   const cards = await CardsCollection.deleteMany({
     boardId: boardId,
-    userId: userId,
+    // userId: userId,
   });
 
   return cards;
@@ -68,7 +49,7 @@ export const deleteCards = async (boardId, userId) => {
 export const deleteColumns = async (boardId, userId) => {
   const columns = await ColumnsCollection.deleteMany({
     boardId: boardId,
-    userId: userId,
+    //  userId: userId,
   });
 
   return columns;
@@ -77,7 +58,7 @@ export const deleteColumns = async (boardId, userId) => {
 export const updateBoard = async (boardId, payload, options = {}) => {
   const rawResult = await BoardsCollection.findOneAndUpdate(
     { _id: boardId },
-    payload,
+    { ...payload },
     {
       new: true,
       includeResultMetadata: true,
@@ -92,3 +73,32 @@ export const updateBoard = async (boardId, payload, options = {}) => {
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
+
+export const deleteBoard = async (boardId) => {
+  const board = await BoardsCollection.findOneAndDelete({
+    _id: boardId,
+  });
+
+  return board;
+};
+
+// =========================== Servises що були зміннені ================
+
+// export const createBoard = async (payload, user, photoUrl) => {
+//   const board = await BoardsCollection.create({
+//     ...payload,
+//     owner: user._id,
+//     background: photoUrl,
+//   });
+
+//   return board;
+// };
+
+// export const getBoardById = async (boardId, user) => {
+//   const board = await BoardsCollection.findById(boardId);
+//   if (board.owner.toString() === user._id.toString()) {
+//     return board;
+//   } else {
+//     return;
+//   }
+// };

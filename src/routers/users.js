@@ -1,15 +1,15 @@
 import { Router } from 'express';
 import {
+  changeThemeController,
   deleteUserController,
   getCurrentUserController,
-  patchThemeController,
   updateUserProfileController,
 } from '../controllers/users.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 // import { upload } from '../middlewares/multer.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import {
-  // userUpdateProfileSchema,
+  userUpdateProfileSchema,
   userUpdateThemeSchema,
 } from '../validations/users.js';
 import {authenticate} from '../middlewares/authenticate.js';
@@ -23,13 +23,14 @@ usersRouter.get('/current', ctrlWrapper(getCurrentUserController));
 usersRouter.patch(
   '/profile',
   // upload.single('avatar'),
+  validateBody(userUpdateProfileSchema),
   ctrlWrapper(updateUserProfileController),
 );
 
 usersRouter.patch(
   '/theme',
   validateBody(userUpdateThemeSchema),
-  ctrlWrapper(patchThemeController),
+  ctrlWrapper(changeThemeController),
 );
 
 usersRouter.delete('/delete-user', deleteUserController);

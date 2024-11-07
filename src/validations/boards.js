@@ -13,12 +13,14 @@ import Joi from 'joi';
 export const createBoardSchema = Joi.object({
   title: Joi.string().min(3).max(30).required(),
   background: Joi.string(),
-  //icon: Joi.string(),
-  filter: Joi.string(),
+  icon: Joi.string(),
+  // filter: Joi.string(),// Не використовуємо
 });
 
 export const updateBoardSchema = Joi.object({
   title: Joi.string().min(3).max(30),
+  background: Joi.string(),
+  icon: Joi.string(),
 });
 
 const dataToValidate = {

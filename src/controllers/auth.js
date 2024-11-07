@@ -40,6 +40,7 @@ export const loginUserController = async (req, res) => {
     message: 'Saccessfully logged in!',
     data: {
       accessToken: session.accessToken,
+      user
     },
   });
 };

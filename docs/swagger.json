@@ -23,10 +23,6 @@
       "description": "Auth operations."
     },
     {
-      "name": "Students",
-      "description": "Operations about users."
-    },
-    {
       "name": "Support",
       "description": "Operations about users support"
     }
@@ -101,6 +97,9 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -175,6 +174,37 @@
                       "type": "string",
                       "example": "Access token expired"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "message": "Contact not found"
                   }
                 }
               }

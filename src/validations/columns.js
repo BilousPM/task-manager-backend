@@ -1,5 +1,9 @@
 import Joi from 'joi';
 
 export const createColumnsSchema = Joi.object({
-  titleColumns: Joi.string().min(3).max(30).required(),
+ title: Joi.string().min(3).max(30).required(),
   });
+
+  export const updateColumnsSchema = Joi.object({
+    title: Joi.string().min(3).max(30)
+     });
