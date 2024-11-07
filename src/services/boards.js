@@ -56,6 +56,24 @@ export const deleteBoard = async (boardId, userId) => {
   return board;
 };
 
+export const deleteCards = async (boardId, userId) => {
+  const cards = await CardsCollection.deleteMany({
+    boardId: boardId,
+    userId: userId,
+  });
+
+  return cards;
+};
+
+export const deleteColumns = async (boardId, userId) => {
+  const columns = await ColumnsCollection.deleteMany({
+    boardId: boardId,
+    userId: userId,
+  });
+
+  return columns;
+};
+
 export const updateBoard = async (boardId, payload, options = {}) => {
   const rawResult = await BoardsCollection.findOneAndUpdate(
     { _id: boardId },

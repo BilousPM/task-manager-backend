@@ -8,6 +8,8 @@ import {
   updateBoard,
   getAllColumnsByBoardId,
   getAllCardsByBoardId,
+  deleteCards,
+  deleteColumns,
 } from '../services/boards.js';
 import createHttpError from 'http-errors';
 //import { parsePaginationParams } from '../utils/boards/parsePaginationParams.js';
@@ -35,10 +37,10 @@ export const getBoardByIdController = async (req, res) => {
     // console.log('user:', user);
     //  console.log('board tipe:', typeof boardId);
 
-    const board = await getBoardById(boardId, user);
-    const columns = await getAllColumnsByBoardId(boardId, user);
     const cards = await getAllCardsByBoardId(boardId, user);
+    const columns = await getAllColumnsByBoardId(boardId, user);
 
+    const board = await getBoardById(boardId, user);
     if (!board) {
       throw createHttpError(404, 'Board not  found');
     }
@@ -76,8 +78,12 @@ export const createBoardController = async (req, res, next) => {
 
 export const deleteBoardController = async (req, res, next) => {
   const { boardId } = req.params;
-  const { userId } = req.user;
+  const userId = req.user._id;
+
+  const cards = await deleteCards(boardId, userId);
+  const columns = await deleteColumns(boardId, userId);
   const board = await deleteBoard(boardId, userId);
+
   if (!board) {
     next(createHttpError(404, `Board with Id  ${boardId} not found in db!`));
     return;
