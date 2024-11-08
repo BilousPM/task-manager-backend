@@ -1,0 +1,19 @@
+type: 'object'
+properties:
+  name:
+    type: 'string'
+    example: 'John Doe'
+    minLength: 3
+    maxLength: 30
+  email:
+    type: 'string'
+    format: 'email'
+    example: 'john.doe@example.com'
+  password:
+    type: 'string'
+    example: 'password123'
+    minLength: 8
+required:
+  - name
+  - email
+  - password

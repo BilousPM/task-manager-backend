@@ -1,0 +1,41 @@
+post:
+  operationId: 'loginUser'
+  summary: 'Login user and create session'
+  security:
+    - bearerAuth: []
+  tags:
+    - 'Auth'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/loginUser.yaml'
+  responses:
+    '200':
+      description: 'User logged in successfully'
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'integer'
+                example: 200
+              message:
+                type: 'string'
+                example: 'Successfully logged in!'
+              data:
+                type: 'object'
+                properties:
+                  accessToken:
+                    type: 'string'
+                    example: 'yourAccessToken'
+                  user:
+                    $ref: '../components/schemas/user.yaml'
+    '401':
+      description: 'Unauthorized. Please check your credentials!'
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml'

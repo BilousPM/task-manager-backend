@@ -44,7 +44,25 @@ paths:
       $ref: ../swagger/paths/boards/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/boards/{id}/delete.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
 components:
+  schemas:
+    User:
+      $ref: '../swagger/components/schemas/user.yaml'
+    RegisterUser:
+      $ref: '../swagger/components/schemas/registerUser.yaml'
+    LoginUser:
+      $ref: '../swagger/components/schemas/loginUser.yaml'
+    Error:
+      $ref: '../swagger/components/schemas/error.yaml'
   securitySchemes:
     bearerAuth:
       type: http

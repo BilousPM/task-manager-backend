@@ -1,0 +1,35 @@
+post:
+  operationId: 'registerUser'
+  summary: 'Register a new user'
+  security:
+    - bearerAuth: []
+  tags:
+    - 'Auth'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/registerUser.yaml'
+  responses:
+    '201':
+      description: 'User registered successfully'
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'integer'
+                example: 201
+              message:
+                type: 'string'
+                example: 'Successfully registered a user!'
+              data:
+                $ref: '../components/schemas/user.yaml'
+    '409':
+      description: 'Email in use'
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/error.yaml'
