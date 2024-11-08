@@ -13,28 +13,23 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { isValidId } from '../middlewares/boards/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import { upload } from '../middlewares/multer.js';
+//import { upload } from '../middlewares/multer.js';
 
 import { createBoardSchema, updateBoardSchema } from '../validations/boards.js';
 
 const boardsRouter = Router();
 
-boardsRouter.use('/',authenticate); // аутентифікація user і  запис user в  req.user через middleware
+boardsRouter.use('/', authenticate); // аутентифікація user і  запис user в  req.user через middleware
 
 boardsRouter.post(
   '/',
   validateBody(createBoardSchema),
-  ctrlWrapper(createBoardController)
+  ctrlWrapper(createBoardController),
 );
 
-boardsRouter.get('/:boardId',
-  isValidId,
-  ctrlWrapper(getBoardByIdController)
-);
+boardsRouter.get('/:boardId', isValidId, ctrlWrapper(getBoardByIdController));
 
-boardsRouter.get('/',
-  ctrlWrapper(getBoardsController)
-);
+boardsRouter.get('/', ctrlWrapper(getBoardsController));
 
 boardsRouter.patch(
   '/:boardId',
@@ -42,18 +37,19 @@ boardsRouter.patch(
   ctrlWrapper(updateBoardController),
 );
 
-boardsRouter.delete('/:boardId',
+boardsRouter.delete(
+  '/:boardId',
   //  isValidId,
-    ctrlWrapper(deleteBoardController));
+  ctrlWrapper(deleteBoardController),
+);
 
-  // boardsRouter.put(
-  //   '/:boardId',
-  //   // isValidId,
-  //   //upload.single('background'),
-  //   validateBody(createBoardSchema),
-  //   ctrlWrapper(upsertBoardController),
-  // );
-
+// boardsRouter.put(
+//   '/:boardId',
+//   // isValidId,
+//   //upload.single('background'),
+//   validateBody(createBoardSchema),
+//   ctrlWrapper(upsertBoardController),
+// );
 
 // boardsRouter.post(
 //   '/register',
@@ -62,10 +58,6 @@ boardsRouter.delete('/:boardId',
 // );
 
 export default boardsRouter;
-
-
-
-
 
 // =========== Змінені роути =======
 

@@ -1,0 +1,60 @@
+#/swagger/paths/boards/post.yaml
+tags:
+  - Boards
+summary: Create board
+operationId: createBoard
+description: 'Create a contact with payload in body'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - title
+        properties:
+          _id:
+            description: "Board's id"
+            type: string
+            example: 65e4decdd286b30065d54af9
+          title:
+            description: "Board's name"
+            type: string
+            example: 'Project 1'
+          icon:
+            description: "Board's icon"
+            type: string
+            example: 'board icon modern'
+          background:
+            description: 'background images'
+            type: string
+            example: 'https://example/images.png'
+          owner:
+            description: "Contact's favourite . Should be true or false"
+            type: boolean
+            example: false
+
+responses:
+  '201':
+    description: Creates a board
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created !
+            data:
+              type: object
+              $ref: '../../components/schemas/board.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

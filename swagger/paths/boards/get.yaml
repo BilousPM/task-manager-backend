@@ -1,0 +1,42 @@
+#/swagger/paths/boards/get.yaml
+
+tags:
+  - Boards
+summary: Get list of boards
+operationId: getBoards
+description: 'Get list of board  with this endpoint'
+security:
+  - bearerAuth: []
+#parameters:
+
+responses:
+  '200':
+    description: Successfully found board!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found boards!
+            data:
+              type: object
+              required:
+                - boards
+
+              properties:
+                boards:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/board.yaml'
+
+  '401':
+    $ref: '../../components/responses/401.yaml'

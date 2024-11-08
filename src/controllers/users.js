@@ -53,8 +53,11 @@ const userId = req.user._id;
 
 // ----- Update User Profile -----
 export const updateUserProfileController = async (req, res) => {
+  const data = req.body;
+  console.log(data);
   const { _id } = req.user;
   const { name, email, password } = req.body;
+
 
   const updateFields = {};
 

@@ -1,0 +1,33 @@
+type: object
+required:
+  - _id
+  - title
+  - description
+  - priority
+  - columnId
+properties:
+  _id:
+    description: "Card's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365
+  title:
+    description: 'Name of card'
+    type: string
+    example: 'develop part 1 '
+  description:
+    description: "Card's describe text"
+    type: string
+    example: 'part 1 of backend'
+  deadline:
+    description: "Card's deadline "
+    type: string
+    example: '01-01-2031'
+  priority:
+    description: 'property card'
+    type: string
+    enum: ['Low', 'Medium', 'High', 'Without priority']
+    example: 'Low'
+  columnId:
+    description: "parent Columns's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365

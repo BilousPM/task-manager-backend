@@ -1,0 +1,18 @@
+type: object
+required:
+  - _id
+  - title
+  - boardId
+properties:
+  _id:
+    description: "Column's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365
+  title:
+    description: 'Name of card'
+    type: string
+    example: 'develop part 1 '
+  boardId:
+    description: "parent Board's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365

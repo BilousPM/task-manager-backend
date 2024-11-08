@@ -23,6 +23,10 @@
       "description": "Auth operations."
     },
     {
+      "name": "Boards",
+      "description": "Boards operations."
+    },
+    {
       "name": "Support",
       "description": "Operations about users support"
     }
@@ -103,6 +107,357 @@
           }
         }
       }
+    },
+    "/boards": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get list of contacts",
+        "operationId": "getBoards",
+        "description": "Get list of board  with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found board!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found contacts!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "boards"
+                      ],
+                      "properties": {
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/board"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Create board",
+        "operationId": "createBoard",
+        "description": "Create a contact with payload in body",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "_id": {
+                    "description": "Board's id",
+                    "type": "string",
+                    "example": "65e4decdd286b30065d54af9"
+                  },
+                  "title": {
+                    "description": "Board's name",
+                    "type": "string",
+                    "example": "Project 1"
+                  },
+                  "icon": {
+                    "description": "Board's icon",
+                    "type": "string",
+                    "example": "board icon modern"
+                  },
+                  "background": {
+                    "description": "background images",
+                    "type": "string",
+                    "example": "https://example/images.png"
+                  },
+                  "owner": {
+                    "description": "Contact's favourite . Should be true or false",
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created !"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/board"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/boards/{id}": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get board columns cards  by id",
+        "operationId": "getBoard",
+        "description": "Get board by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get board with structure by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found board"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": "-data",
+                      "properties": {
+                        "board": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string"
+                            },
+                            "_id": {
+                              "type": "string"
+                            },
+                            "owner": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "columnsAll": {
+                          "type": "array",
+                          "items": {
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "boardId": {
+                                "type": "string"
+                              },
+                              "cards": {
+                                "type": "array",
+                                "items": null,
+                                "$ref": "#/components/schemas/card"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "patch board by id",
+        "operationId": "patchBoard",
+        "description": "PATCH board by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PATCH board by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patch board"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/board"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "delete board with id",
+        "operationId": "deleteBoard",
+        "description": "Delete board",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delete board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 204
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -139,6 +494,106 @@
             "description": "Link to User's photo",
             "type": "string",
             "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+          }
+        }
+      },
+      "board": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Board's id",
+            "type": "string",
+            "example": "678ce62907b1bc9bc45a365"
+          },
+          "title": {
+            "description": "Board's id",
+            "type": "string",
+            "example": "678ce62907b1bc9bc45a365"
+          },
+          "icon": {
+            "description": "Board's icon",
+            "type": "string",
+            "example": "icon-name"
+          },
+          "background": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "description": "background's board min",
+                "type": "string",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              "desktop": {
+                "description": "background's board desktop",
+                "type": "string",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              "tablet": {
+                "description": "background's board tablet",
+                "type": "string",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              "mobile": {
+                "description": "background's board mobile",
+                "type": "string",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              }
+            }
+          },
+          "owner": {
+            "description": "User's owner id",
+            "type": "string"
+          }
+        }
+      },
+      "card": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "description",
+          "priority",
+          "columnId"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Card's id",
+            "type": "string",
+            "example": "678ce62907b1bc9bc45a365"
+          },
+          "title": {
+            "description": "Name of card",
+            "type": "string",
+            "example": "develop part 1 "
+          },
+          "description": {
+            "description": "Card's describe text",
+            "type": "string",
+            "example": "part 1 of backend"
+          },
+          "deadline": {
+            "description": "Card's deadline ",
+            "type": "string",
+            "example": "01-01-2031"
+          },
+          "priority": {
+            "description": "property card",
+            "type": "string",
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Without priority"
+            ],
+            "example": "Low"
+          },
+          "columnId": {
+            "description": "parent Columns's id",
+            "type": "string",
+            "example": "678ce62907b1bc9bc45a365"
           }
         }
       }
@@ -204,7 +659,7 @@
                 "data": {
                   "type": "object",
                   "example": {
-                    "message": "Contact not found"
+                    "message": " not found"
                   }
                 }
               }

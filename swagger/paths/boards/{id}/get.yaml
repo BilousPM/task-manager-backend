@@ -1,0 +1,64 @@
+# swagger/paths/boards/{id}/get.yaml
+tags:
+  - Boards
+summary: Get board columns cards  by id
+operationId: getBoard
+description: 'Get board by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '67ca67e7ae7f10c88b598384'
+responses:
+  '200':
+    description: 'Get board with structure by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - title
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found board
+            data:
+              type: object
+              required: -data
+              properties:
+                board:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    _id:
+                      type: string
+                    owner:
+                      type: string
+                    createdAt:
+                      type: string
+                columnsAll:
+                  type: array
+                  items:
+                    properties:
+                      _id:
+                        type: string
+                      title:
+                        type: string
+                      boardId:
+                        type: string
+                      cards:
+                        type: array
+                        items:
+                        $ref: '../../../components/schemas/card.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

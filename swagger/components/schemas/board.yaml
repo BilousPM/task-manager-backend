@@ -1,0 +1,39 @@
+type: object
+required:
+  - title
+
+properties:
+  _id:
+    description: "Board's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365
+  title:
+    description: "Board's id"
+    type: string
+    example: 678ce62907b1bc9bc45a365
+  icon:
+    description: "Board's icon"
+    type: string
+    example: 'icon-name'
+  background:
+    type: object
+    properties:
+      min:
+        description: "background's board min"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+      desktop:
+        description: "background's board desktop"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+      tablet:
+        description: "background's board tablet"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+      mobile:
+        description: "background's board mobile"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+  owner:
+    description: "User's owner id"
+    type: string
