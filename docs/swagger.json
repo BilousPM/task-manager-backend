@@ -32,6 +32,279 @@
     }
   ],
   "paths": {
+    "/user/{current}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User by id",
+        "operationId": "getUser",
+        "description": "Get User by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "current",
+            "required": true,
+            "schema": {
+              "description": "MongoDB id",
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get User by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found User with id 65ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/profile": {
+      "patch": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Partially update a profile",
+        "operationId": "patchProfile",
+        "description": "Partially updates a profile's information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profile",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the profile to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Contact not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/user/theme": {
+      "patch": {
+        "tags": [
+          "Theme"
+        ],
+        "summary": "Partially update a theme",
+        "operationId": "patchTheme",
+        "description": "Partially updates a theme's information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the theme to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the theme.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Contact not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/user/delete-user": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "operationId": "deleteUser",
+        "description": "Deletes a user by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to delete."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the user."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Contact not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/support/send-message": {
       "post": {
         "tags": [
@@ -113,7 +386,7 @@
         "tags": [
           "Boards"
         ],
-        "summary": "Get list of contacts",
+        "summary": "Get list of boards",
         "operationId": "getBoards",
         "description": "Get list of board  with this endpoint",
         "security": [
@@ -140,7 +413,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found contacts!"
+                      "example": "Successfully found boards!"
                     },
                     "data": {
                       "type": "object",
@@ -205,12 +478,12 @@
                   "background": {
                     "description": "background images",
                     "type": "string",
-                    "example": "https://example/images.png"
+                    "example": "bg1"
                   },
                   "owner": {
-                    "description": "Contact's favourite . Should be true or false",
-                    "type": "boolean",
-                    "example": false
+                    "description": "parent user's id",
+                    "type": "string",
+                    "example": "65e4decdd286b30065d54af9"
                   }
                 }
               }
@@ -300,7 +573,9 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": "-data",
+                      "required": [
+                        "data"
+                      ],
                       "properties": {
                         "board": {
                           "type": "object",
@@ -334,8 +609,9 @@
                               },
                               "cards": {
                                 "type": "array",
-                                "items": null,
-                                "$ref": "#/components/schemas/card"
+                                "items": {
+                                  "$ref": "#/components/schemas/card"
+                                }
                               }
                             }
                           }
@@ -519,29 +795,9 @@
             "example": "icon-name"
           },
           "background": {
-            "type": "object",
-            "properties": {
-              "min": {
-                "description": "background's board min",
-                "type": "string",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-              },
-              "desktop": {
-                "description": "background's board desktop",
-                "type": "string",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-              },
-              "tablet": {
-                "description": "background's board tablet",
-                "type": "string",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-              },
-              "mobile": {
-                "description": "background's board mobile",
-                "type": "string",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-              }
-            }
+            "description": "Board's background",
+            "type": "string",
+            "example": "bg1"
           },
           "owner": {
             "description": "User's owner id",

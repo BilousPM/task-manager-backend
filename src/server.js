@@ -3,7 +3,7 @@ import cors from 'cors';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { env } from './utils/env.js';
-import { ENV_VARS } from './constants/index.js';
+import { ENV_VARS, UPLOAD_DIR } from './constants/index.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
@@ -18,6 +18,7 @@ export const setupServer = () => {
   app.use(cors());
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
+  app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
 
 

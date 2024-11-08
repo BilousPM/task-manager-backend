@@ -29,12 +29,11 @@ requestBody:
           background:
             description: 'background images'
             type: string
-            example: 'https://example/images.png'
+            example: 'bg1'
           owner:
-            description: "Contact's favourite . Should be true or false"
-            type: boolean
-            example: false
-
+            description: "parent user's id"
+            type: string
+            example: 65e4decdd286b30065d54af9
 responses:
   '201':
     description: Creates a board

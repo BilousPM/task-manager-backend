@@ -6,7 +6,7 @@ import {
   updateUserProfileController,
 } from '../controllers/users.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-// import { upload } from '../middlewares/multer.js';
+import { upload } from '../middlewares/multer.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import {
   userUpdateProfileSchema,
@@ -22,7 +22,7 @@ usersRouter.get('/current', ctrlWrapper(getCurrentUserController));
 
 usersRouter.patch(
   '/profile',
-  // upload.single('avatar'),
+  upload.single('avatar'),
   validateBody(userUpdateProfileSchema),
   ctrlWrapper(updateUserProfileController),
 );

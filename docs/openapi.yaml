@@ -17,6 +17,18 @@ servers:
   - url: http://localhost:3000
   - url: https://example.com/api/v1
 paths:
+  /user/{current}:
+    get:
+      $ref: ../swagger/paths/user/current/get.yaml
+  /user/profile:
+    patch:
+      $ref: ../swagger/paths/user/profile/patch.yaml
+  /user/theme:
+    patch:
+      $ref: ../swagger/paths/user/theme/patch.yaml
+  /user/delete-user:
+    delete:
+      $ref: ../swagger/paths/user/delete-user/delete.yaml
   /support/send-message:
     post:
       $ref: ../swagger/paths/support/post.yaml

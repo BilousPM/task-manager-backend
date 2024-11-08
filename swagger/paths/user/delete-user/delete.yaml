@@ -1,0 +1,23 @@
+tags:
+  - User
+summary: Delete a user
+operationId: deleteUser
+description: Deletes a user by its ID.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+    description: The ID of the user to delete.
+responses:
+  '204':
+    description: Successfully deleted the user.
+  '401':
+    description: Unauthorized.
+  '404':
+    description: Contact not found.
+  '500':
+    description: Internal server error.

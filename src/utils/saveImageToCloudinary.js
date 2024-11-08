@@ -1,16 +1,18 @@
-import { v2 as cloudinary } from 'cloudinary';
-import fs from 'node:fs/promises';
+import cloudinary from 'cloudinary';
 import { env } from './env.js';
-import { MONGO_DB_VARS } from '../constants/index.js';
+import { CLOUDINARY } from '../constants/index.js';
+import fs from 'node:fs/promises';
 
-cloudinary.config({
-  cloud_name: env(MONGO_DB_VARS.CLOUDINARY_CLOUD_NAME),
-  api_key: env(MONGO_DB_VARS.CLOUDINARY_API_KEY),
-  api_secret: env(MONGO_DB_VARS.CLOUDINARY_API_SECRET),
+cloudinary.v2.config({
+  secure: true,
+  cloud_name: env(CLOUDINARY.CLOUD_NAME),
+  api_key: env(CLOUDINARY.API_KEY),
+  api_secret: env(CLOUDINARY.API_SECRET),
 });
 
-export const saveImageToCloudinary = async (file) => {
-  const res = await cloudinary.uploader.upload(file.path);
+export const saveFileToCloudinary = async (file) => {
+  const respons = await cloudinary.v2.uploader.upload(file.path);
   await fs.unlink(file.path);
-  return res.secure_url;
+  return respons.secure_url;
 };
+

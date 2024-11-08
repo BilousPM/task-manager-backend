@@ -33,6 +33,7 @@ export const getBoardByIdController = async (req, res) => {
 
   const board = await getBoardById(boardId);
   const columns = await getAllColumnsByBoardId(boardId);
+<<<<<<< HEAD
   const columnsAll = [];
 
   for (const column of columns) {
@@ -46,6 +47,20 @@ export const getBoardByIdController = async (req, res) => {
     columnsAll.push(colunmInfo);
   }
   // console.log(colunmInfo);
+=======
+const columnsAll = [];
+
+for(const column of columns){
+  const {_id, title, boardId} = column;
+  const cardsArray = await getCardsByColumnId(column._id);
+  const colunmInfo = {};
+colunmInfo._id = _id;
+colunmInfo.title = title;
+colunmInfo.boardId = boardId;
+colunmInfo.cards = cardsArray;
+columnsAll.push(colunmInfo);
+}
+>>>>>>> 4a21ec1084de281dcafc4ce2befb1826cb67a88b
 
   if (!board) {
     throw createHttpError(404, 'Board not  found');
@@ -54,38 +69,15 @@ export const getBoardByIdController = async (req, res) => {
   res.json({
     status: 200,
     message: `Successfully found board with id ${boardId}!`,
+<<<<<<< HEAD
     data: { board, columnsAll },
 
     //   data: {board, columns: [...columns],cards: [...cards]},
+=======
+    data: {board, columnsAll},
+>>>>>>> 4a21ec1084de281dcafc4ce2befb1826cb67a88b
   });
 };
-// export const getBoardByIdController = async (req, res) => {
-//     const { boardId } = req.params;
-
-//     const board = await getBoardById(boardId);
-//     const columns = await getAllColumnsByBoardId(boardId);
-
-//     const columnsId = columns.map(column => column._id);
-//     const cards = [];
-
-// for(const item of columnsId)
-//   {
-//     const cardsArray = await getCardsByColumnId(item);
-//     cards.push(...cardsArray);
-
-//   };
-
-//     if (!board) {
-//       throw createHttpError(404, 'Board not  found');
-//     }
-
-//     res.json({
-//       status: 200,
-//       message: `Successfully found board with id ${boardId}!`,
-//       data: {board, columns: [...columns],cards: [...cards]},
-//     });
-
-// };
 
 // ----- Get All Boards By User Id -----
 export const getBoardsController = async (req, res, next) => {
@@ -242,4 +234,33 @@ export const deleteBoardController = async (req, res, next) => {
 //     message: `Successfully patched a board Id: ${boardId}!`,
 //     data: result.board,
 //   });
+// };
+
+
+// export const getBoardByIdController = async (req, res) => {
+//     const { boardId } = req.params;
+
+//     const board = await getBoardById(boardId);
+//     const columns = await getAllColumnsByBoardId(boardId);
+
+//     const columnsId = columns.map(column => column._id);
+//     const cards = [];
+
+// for(const item of columnsId)
+//   {
+//     const cardsArray = await getCardsByColumnId(item);
+//     cards.push(...cardsArray);
+
+//   };
+
+//     if (!board) {
+//       throw createHttpError(404, 'Board not  found');
+//     }
+
+//     res.json({
+//       status: 200,
+//       message: `Successfully found board with id ${boardId}!`,
+//       data: {board, columns: [...columns],cards: [...cards]},
+//     });
+
 // };

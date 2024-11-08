@@ -16,24 +16,9 @@ properties:
     type: string
     example: 'icon-name'
   background:
-    type: object
-    properties:
-      min:
-        description: "background's board min"
-        type: string
-        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-      desktop:
-        description: "background's board desktop"
-        type: string
-        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-      tablet:
-        description: "background's board tablet"
-        type: string
-        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-      mobile:
-        description: "background's board mobile"
-        type: string
-        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+    description: "Board's background"
+    type: string
+    example: 'bg1'
   owner:
     description: "User's owner id"
     type: string
