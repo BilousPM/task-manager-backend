@@ -26,9 +26,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
@@ -40,11 +38,7 @@
               "schema": {
                 "type": "object",
 
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ],
+                "required": ["name", "email", "password"],
 
                 "required": ["name", "email", "password"],
 
@@ -88,7 +82,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "$ref": "#/components/schemas/user",
                       "$ref": "#/components/schemas/registerUser"
                     }
                   }
@@ -108,11 +102,7 @@
 
                   "required": ["status", "message", "data"],
 
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -142,9 +132,7 @@
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user and create session",
         "operationId": "loginUser",
         "description": "Login user",
@@ -155,10 +143,7 @@
               "schema": {
                 "type": "object",
                 "required": ["email", "password"],
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -183,11 +168,7 @@
                 "schema": {
                   "type": "object",
                   "required": ["status", "message", "data"],
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -247,7 +228,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/401",
             "description": "Unauthorized. Please check your credentials!",
             "content": {
               "application/json": {
@@ -263,9 +244,7 @@
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Ends the user session by deleting the session data.",
         "operationId": "logoutUser",
         "description": "Successfully logged out, no content returned.",
@@ -752,11 +731,7 @@
       },
       "registerUser": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -788,11 +763,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
 
               "required": ["status", "message"],
 
@@ -807,9 +778,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -818,46 +787,9 @@
                   }
                 }
               }
-
-      },
-      "error": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 400
-          },
-          "message": {
-            "type": "string",
-            "example": "Bad request"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-
-            }
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    },
-    "responses": {
-      "400": {
-        "description": "Bad request",
-        "content": {
-          "application/json": {
-            "schema": {
+            },
+            "error": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -865,7 +797,42 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Please check the provided data"
+                  "example": "Bad request"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "securitySchemes": {
+            "bearerAuth": {
+              "type": "http",
+              "scheme": "bearer"
+            }
+          },
+          "responses": {
+            "400": {
+              "description": "Bad request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "required": ["status", "message"],
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "example": 400
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Please check the provided data"
+                      }
+                    }
+                  }
                 }
               }
             }
