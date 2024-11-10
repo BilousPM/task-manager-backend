@@ -14,63 +14,55 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://task-manager-backend-y4a1.onrender.com"
     }
   ],
   "tags": [
     {
       "name": "Auth",
       "description": "Auth operations."
-    },
-    {
-      "name": "Support",
-      "description": "Operations about users support"
     }
   ],
   "paths": {
-    "/support/send-message": {
+    "/auth/register": {
       "post": {
-<<<<<<< Updated upstream
         "tags": [
-          "Support"
+          "Auth"
         ],
-        "summary": "Send email to support",
-        "operationId": "sendEmailToSupport",
-        "description": "Create a contact with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-=======
         "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "description": "Create a New User",
         "security": [],
->>>>>>> Stashed changes
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
-<<<<<<< Updated upstream
+
                 "required": [
+                  "name",
                   "email",
-                  "message"
+                  "password"
                 ],
-=======
+
                 "required": ["name", "email", "password"],
->>>>>>> Stashed changes
+
                 "properties": {
-                  "email": {
-                    "description": "User's email",
+                  "name": {
                     "type": "string",
-                    "example": "testuser@mail.com"
+                    "example": "John Doe",
+                    "description": "The user's name."
                   },
-                  "message": {
-                    "description": "Message that will be sent to support",
-                    "type": "string"
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com",
+                    "description": "The user's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123",
+                    "description": "The user's password."
                   }
                 }
               }
@@ -79,7 +71,7 @@
         },
         "responses": {
           "201": {
-            "description": "Creates a contact",
+            "description": "Creates a new contact",
             "content": {
               "application/json": {
                 "schema": {
@@ -96,9 +88,7 @@
                     },
                     "data": {
                       "type": "object",
-<<<<<<< Updated upstream
                       "$ref": "#/components/schemas/user"
-=======
                       "$ref": "#/components/schemas/registerUser"
                     }
                   }
@@ -115,7 +105,14 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+
                   "required": ["status", "message", "data"],
+
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -145,6 +142,9 @@
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login user and create session",
         "operationId": "loginUser",
         "description": "Login user",
@@ -155,6 +155,10 @@
               "schema": {
                 "type": "object",
                 "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -179,6 +183,11 @@
                 "schema": {
                   "type": "object",
                   "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -231,7 +240,6 @@
                           }
                         }
                       }
->>>>>>> Stashed changes
                     }
                   }
                 }
@@ -239,9 +247,7 @@
             }
           },
           "401": {
-<<<<<<< Updated upstream
             "$ref": "#/components/responses/401"
-=======
             "description": "Unauthorized. Please check your credentials!",
             "content": {
               "application/json": {
@@ -257,6 +263,9 @@
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Ends the user session by deleting the session data.",
         "operationId": "logoutUser",
         "description": "Successfully logged out, no content returned.",
@@ -268,10 +277,16 @@
         "responses": {
           "204": {
             "description": "User logged out successfully"
->>>>>>> Stashed changes
           },
-          "404": {
-            "$ref": "#/components/responses/404"
+          "401": {
+            "description": "Bad request. No session found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -673,8 +688,6 @@
   },
 
   "components": {
-<<<<<<< Updated upstream
-=======
     "schemas": {
       "RegisterUser": {
         "$ref": "#/components/schemas/registerUser"
@@ -725,40 +738,45 @@
         }
       }
     },
->>>>>>> Stashed changes
+
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
       }
     },
+
     "schemas": {
-      "user": {
+      "RegisterUser": {
+        "$ref": "#/components/schemas/registerUser"
+      },
+      "registerUser": {
         "type": "object",
         "required": [
-          "_id",
-          "name"
+          "name",
+          "email",
+          "password"
         ],
         "properties": {
-          "_id": {
-            "description": "User's id",
-            "type": "string",
-            "example": "66f8ce62907b1bc9bc45a365"
-          },
           "name": {
-            "description": "User's name",
             "type": "string",
-            "example": "John Doe"
+            "example": "John Doe",
+            "minLength": 3,
+            "maxLength": 30
           },
           "email": {
-            "description": "User's email",
             "type": "string",
-            "example": "testcontact@mail.com"
+            "format": "email",
+            "example": "john.doe@example.com"
           },
-          "photo": {
-            "description": "Link to User's photo",
+          "password": {
             "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+            "example": "password123",
+            "minLength": 8
+          },
+          "theme": {
+            "type": "string",
+            "example": "light"
           }
         }
       }
@@ -770,15 +788,14 @@
           "application/json": {
             "schema": {
               "type": "object",
-<<<<<<< Updated upstream
               "required": [
                 "status",
                 "message",
                 "data"
               ],
-=======
+
               "required": ["status", "message"],
->>>>>>> Stashed changes
+
               "properties": {
                 "status": {
                   "type": "integer",
@@ -801,35 +818,54 @@
                   }
                 }
               }
+
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad request"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+
             }
           }
         }
-      },
-      "404": {
-        "description": "Not Found",
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad request",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "required": [
                 "status",
-                "message",
-                "data"
+                "message"
               ],
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 404
+                  "example": 400
                 },
                 "message": {
                   "type": "string",
-                  "example": "NotFoundError"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "message": "Contact not found"
-                  }
+                  "example": "Please check the provided data"
                 }
               }
             }

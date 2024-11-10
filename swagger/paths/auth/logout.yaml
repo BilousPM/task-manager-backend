@@ -1,0 +1,19 @@
+tags:
+  - Auth
+summary: Ends the user session by deleting the session data.
+operationId: logoutUser
+description: Successfully logged out, no content returned.
+security:
+    - bearerAuth: []
+responses:
+  '204':
+    description: 'User logged out successfully'
+  '401':
+    description: 'Bad request. No session found.'
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/error.yaml
+
+
+

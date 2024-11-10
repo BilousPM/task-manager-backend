@@ -7,11 +7,11 @@ import {
 } from '../controllers/columns.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { createColumnsSchema } from '../validations/columns.js';
+import { createColumnsSchema, updateColumnsSchema } from '../validations/columns.js';
 import { isValidId } from '../middlewares/isValidId.js';
 
-const columnsRouter = Router();
 
+const columnsRouter = Router();
 columnsRouter.use('/', authenticate);
 
 columnsRouter.post(
@@ -21,12 +21,19 @@ columnsRouter.post(
   ctrlWrapper(createColumnController),
 );
 
-columnsRouter.put(
-  '/',
+columnsRouter.patch(
+  '/:columnId',
   // isValidId,
-  validateBody(createColumnsSchema),
+  validateBody(updateColumnsSchema),
   ctrlWrapper(updateColumnController),
 );
 
-columnsRouter.post('/', isValidId, ctrlWrapper(deleteColumnController));
+columnsRouter.delete(
+  '/:columnId',
+  // isValidId,co
+  ctrlWrapper(deleteColumnController),
+);
+
+
+
 export default columnsRouter;

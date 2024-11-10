@@ -1,4 +1,3 @@
-// src/db/models/board.js
 import { model, Schema } from 'mongoose';
 
 const boardsSchema = new Schema(
@@ -7,18 +6,14 @@ const boardsSchema = new Schema(
       type: String,
       required: [true, "Set the board's title"],
     },
-    icon: { type: String, required: false },
-    background: {
-      min: { type: String },
-      desktop: { type: String },
-      tablet: { type: String },
-      mobile: { type: String },
+    icon: { type: String,
+      default: "default"
     },
-    filter: {
-      type: String,
-      enum: ['default', 'without', 'low', 'medium', 'high'],
-      default: 'default',
+
+    background: { type: String,
+      default: "default"
     },
+
 
     owner: {
       type: Schema.Types.ObjectId,
@@ -30,3 +25,10 @@ const boardsSchema = new Schema(
 );
 
 export const BoardsCollection = model('boards', boardsSchema);
+
+// background: {
+//   min: { type: String },
+//   desktop: { type: String },
+//   tablet: { type: String },
+//   mobile: { type: String },
+// },

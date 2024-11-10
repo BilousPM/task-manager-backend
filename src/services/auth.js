@@ -1,7 +1,4 @@
-import createHttpError from 'http-errors';
-// import { Session } from '../db/models/session.js';
 import { randomBytes } from 'crypto';
-import bcrypt from 'bcrypt';
 import {
   ACCESS_TOKEN_LIVE_TIME,
   REFRESH_TOKEN_LIVE_TIME,
@@ -9,25 +6,17 @@ import {
 import { UserCollection } from '../db/models/user.js';
 import { SessionCollection } from '../db/models/session.js';
 
-// ----- User Register -----
-export const registerUser = async (registrationData) => {
-  const user = await UserCollection.findOne({ email: registrationData.email });
-
-  if (user) throw createHttpError(409, 'Email in use');
-
-  const encryptedPassword = await bcrypt.hash(registrationData.password, 10);
-
-  return await UserCollection.create({
-    ...registrationData,
-    password: encryptedPassword,
-  });
-};
-
 // ----- Find User By Email -----
 export const findUserByEmail = (email) => UserCollection.findOne({ email });
 
 // ----- Find User By Id -----
 export const findUserById = (userId) => UserCollection.findById(userId);
+
+// ----- User Register -----
+export const registerUser = (registrationData, password) => UserCollection.create({
+  ...registrationData,
+  password,
+});
 
 // ----- Update User -----
 export const updateUser = (userData) => UserCollection.findOneAndUpdate();

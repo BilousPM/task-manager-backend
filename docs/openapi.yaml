@@ -5,21 +5,59 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description:
-    This is a documentation of Personal Task's Manager app
+  description: This is a documentation of Personal Task's Manager app
 tags:
   - name: Auth
     description: Auth operations.
-  - name: Support
-    description: Operations about users support
 servers:
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
+  - url: https://task-manager-backend-y4a1.onrender.com
 paths:
-  /support/send-message:
+  /auth/register:
     post:
-      $ref: ../swagger/paths/support/post.yaml
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+
+
+  # /user/{current}:
+  #   get:
+  #     $ref: ../swagger/paths/user/current/get.yaml
+  # /user/profile:
+  #   patch:
+  #     $ref: ../swagger/paths/user/profile/patch.yaml
+  # /user/theme:
+  #   patch:
+  #     $ref: ../swagger/paths/user/theme/patch.yaml
+  # /user/delete-user:
+  #   delete:
+  #     $ref: ../swagger/paths/user/delete-user/delete.yaml
+  # /support/send-message:
+  #   post:
+  #     $ref: ../swagger/paths/support/post.yaml
+  # /auth/register:
+  #   post:
+  #     $ref: ../swagger/paths/auth/register.yaml
+  # /auth/login:
+  #   post:
+  #     $ref: ../swagger/paths/auth/post.yaml
+  # /auth/logout:
+  #   post:
+  #     $ref: ../swagger/paths/auth/logout.yaml
 components:
+  schemas:
+    # User:
+    #   $ref: '../swagger/components/schemas/user.yaml'
+    RegisterUser:
+      $ref: '../swagger/components/schemas/registerUser.yaml'
+    # LoginUser:
+    #   $ref: '../swagger/components/schemas/loginUser.yaml'
+    # Error:
+    #   $ref: '../swagger/components/schemas/error.yaml'
   securitySchemes:
     bearerAuth:
       type: http

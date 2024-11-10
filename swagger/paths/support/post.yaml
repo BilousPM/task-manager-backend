@@ -2,7 +2,7 @@ tags:
   - Support
 summary: Send email to support
 operationId: sendEmailToSupport
-description: 'Create a contact with payload'
+description: 'Send Message to support'
 security:
   - bearerAuth: []
 requestBody:

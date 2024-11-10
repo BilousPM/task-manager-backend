@@ -1,0 +1,81 @@
+tags:
+  - Auth
+summary: Login user and create session
+operationId: loginUser
+description: 'Login user'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            example: john.doe@example.com
+            description: The user's email address.
+          password:
+            type: string
+            example: password123
+            description: The user's password.
+responses:
+  '200':
+    description: User successfully logged in
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: 'integer'
+              example: 200
+            message:
+              type: 'string'
+              example: 'Successfully logged in!'
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: 'string'
+                  example: "Z2jvmaNKNxdwAm85WDbqrA=="
+                user:
+                  type: object
+                  # $ref: ../../components/schemas/loginUser.yaml
+                  properties:
+                    _id:
+                      type: string
+                      example: 672cdd90db9f029835cc2bdc
+                      description: User ID created by the database Mongo DB
+                    name:
+                      type: string
+                      example: John Doe
+                      description: The user's name
+                    email:
+                      type: string
+                      example: john.doe@example.com
+                      description: The user's email address.
+                    password:
+                      type: string
+                      example: password123
+                      description: The user's password.
+                    theme:
+                      type: string
+                      example: light
+                      description: the application theme is selected by the user
+                    avatarUrl:
+                      type: string
+                      example: https://res.cloudinary.com/denqnnmh2/image/upload/v1731087488/zn0arkh2mdtljnh5mhcf.webp"
+                      description: avatar uploaded by user (if user uploaded)
+  '401':
+    description: 'Unauthorized. Please check your credentials!'
+    content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/error.yaml

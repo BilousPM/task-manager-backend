@@ -27,7 +27,5 @@ authRouter.post('/logout', ctrlWrapper(logoutUserController));
 
 // authRouter.post('/refresh-session', ctrlWrapper(refreshUserSessionController));
 
-// authRouter.patch('/update-profile', ctrlWrapper());
-
 export default authRouter;
-//
+

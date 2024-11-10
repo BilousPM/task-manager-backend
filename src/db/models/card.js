@@ -24,16 +24,6 @@ const cardsSchema = new Schema(
       required: true,
       ref: 'column',
     },
-    boardId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'boards',
-    },
-    userId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'user',
-    },
   },
   {
     timestamps: true,

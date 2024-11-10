@@ -11,12 +11,17 @@ import { setupSessionCookies } from '../utils/setupSessionCookies.js';
 
 //  ----- User Register -----
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const user  = await findUserByEmail(req.body.email);
+
+  if (user) throw createHttpError(409, 'This email address already exists in the database and cannot be reused.');
+
+  const password = await bcrypt.hash(req.body.password, 10);
+  const newUser = await registerUser(req.body, password);
 
   res.json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: newUser,
   });
 };
 
@@ -32,7 +37,6 @@ export const loginUserController = async (req, res) => {
   if (!isEqualPassword) throw createHttpError(401, 'Wrong credentials');
 
   const session = await createSession(user._id);
-
   setupSessionCookies(res, session);
 
   res.json({

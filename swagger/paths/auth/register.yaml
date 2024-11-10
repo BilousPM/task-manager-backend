@@ -1,0 +1,77 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: 'Create a New User'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            example: John Doe
+            description: The user's name.
+          email:
+            type: string
+            example: john.doe@example.com
+            description: The user's email address.
+          password:
+            type: string
+            example: password123
+            description: The user's password.
+responses:
+  '201':
+    description: Creates a new contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: ../../components/schemas/registerUser.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '409':
+    description: Response when email address is already in use in database
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: ConflictError
+            data:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: This email address already exists in the database and cannot be reused.
+
+
+

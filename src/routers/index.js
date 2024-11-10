@@ -14,10 +14,5 @@ router.use('/boards', boardsRouter);
 router.use('/columns', columnsRouter);
 router.use('/cards', cardsRouter);
 router.use('/support', supportRouter);
-//import boardsRouter from './boards.js';
-//const router = Router();
-
-//router.use('/auth', authRouter);
-//router.use('/boards', boardsRouter);
 
 export default router;
