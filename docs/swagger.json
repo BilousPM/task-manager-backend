@@ -39,7 +39,6 @@
     "/auth/register": {
       "post": {
         "tags": ["Auth"],
-        "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "description": "Create a New User",
@@ -49,11 +48,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-
                 "required": ["name", "email", "password"],
-
-                "required": ["name", "email", "password"],
-
                 "properties": {
                   "name": {
                     "type": "string",
@@ -94,8 +89,6 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user",
-                      "$ref": "#/components/schemas/registerUser"
                       "properties": {
                         "_id": {
                           "type": "string",
@@ -134,9 +127,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-
-                  "required": ["status", "message", "data"],
-
                   "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
@@ -167,7 +157,6 @@
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
-        "tags": ["Auth"],
         "summary": "Login user and create session",
         "operationId": "loginUser",
         "description": "Login user",
@@ -177,7 +166,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
                 "required": ["email", "password"],
                 "properties": {
                   "email": {
@@ -202,7 +190,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
                   "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
@@ -263,15 +250,6 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401",
-            "description": "Unauthorized. Please check your credentials!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
             "$ref": "#/components/responses/401"
           }
         }
@@ -279,7 +257,6 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
         "tags": ["Auth"],
         "summary": "Ends the user session by deleting the session data.",
         "operationId": "logoutUser",
@@ -301,9 +278,7 @@
     },
     "/user/current": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get User by id",
         "operationId": "getUser",
         "description": "Get User by id",
@@ -319,11 +294,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -373,9 +344,7 @@
     },
     "/user/profile": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Partially update a profile",
         "operationId": "patchProfile",
         "description": "Partially updates a profile's information.",
@@ -422,11 +391,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -456,9 +421,7 @@
     },
     "/user/theme": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update a theme",
         "operationId": "patchTheme",
         "description": "Partially updates a theme's information.",
@@ -473,9 +436,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "theme"
-                ],
+                "required": ["theme"],
                 "properties": {
                   "name": {
                     "type": "string",
@@ -494,11 +455,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -514,11 +471,7 @@
                         "theme": {
                           "type": "string",
                           "example": "dark",
-                          "enum": [
-                            "light",
-                            "dark",
-                            "violet"
-                          ],
+                          "enum": ["light", "dark", "violet"],
                           "description": "Preferred theme of the user"
                         }
                       }
@@ -539,9 +492,7 @@
     },
     "/user/delete-user": {
       "delete": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Delete a user",
         "operationId": "deleteUser",
         "description": "Deletes a user by its ID.",
@@ -557,9 +508,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -578,9 +527,7 @@
     },
     "/support/send-message": {
       "post": {
-        "tags": [
-          "Support"
-        ],
+        "tags": ["Support"],
         "summary": "Send email to support",
         "operationId": "sendEmailToSupport",
         "description": "Send Message to support",
@@ -594,10 +541,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "message"
-                ],
+                "required": ["email", "message"],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -620,10 +564,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -644,10 +585,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -668,10 +606,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -685,6 +620,273 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/boards": {
+      "post": {
+        "tags": ["Boards"],
+        "summary": "Create board",
+        "operationId": "createBoard",
+        "description": "Create a board with user id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title"],
+                "properties": {
+                  "title": {
+                    "description": "Board's name",
+                    "type": "string",
+                    "example": "Project 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a new board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a board!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/boardSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/boards/boardId": {
+      "get": {
+        "tags": ["Boards"],
+        "summary": "Get board, columns, cards  by id",
+        "operationId": "getBoard",
+        "description": "Get board by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get board with structure by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["title", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found board with id 67ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "board": {
+                          "$ref": "#/components/schemas/boardSchema"
+                        },
+                        "columnsAll": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": ["_id", "title", "boardId"],
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Unique identifier for the column",
+                                "example": "67305580e57ecb50c727d2ea"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Title of the column",
+                                "example": "To Do something more #1"
+                              },
+                              "boardId": {
+                                "type": "string",
+                                "description": "Unique identifier of the board this column belongs to",
+                                "example": "672babd7db3166fdaba54a5c"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the column was created",
+                                "example": "2024-11-10T06:41:04.611Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the column was last updated",
+                                "example": "2024-11-10T06:41:04.611Z"
+                              },
+                              "cards": {
+                                "items": {
+                                  "$ref": "#/components/schemas/cardSchema"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Boards"],
+        "summary": "Update board by id",
+        "operationId": "putchBoard",
+        "description": "Update board by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "Board's name",
+                    "type": "string",
+                    "example": "Project 1"
+                  },
+                  "background": {
+                    "description": "background images",
+                    "type": "string",
+                    "example": "black"
+                  },
+                  "icon": {
+                    "description": "Board's icon",
+                    "type": "string",
+                    "example": "board icon modern"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creates a board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated a board with Id 6731c3311073caeedf7353b6!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/boardSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Boards"],
+        "summary": "delete board with id",
+        "operationId": "deleteBoard",
+        "description": "Delete board",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -705,14 +907,6 @@
           }
         ],
         "operationId": "addColumn",
-    "/boards": {
-      "post": {
-        "tags": [
-          "Boards"
-        ],
-        "summary": "Create board",
-        "operationId": "createBoard",
-        "description": "Create a board with user id",
         "security": [
           {
             "bearerAuth": []
@@ -920,23 +1114,6 @@
           "400": { "$ref": "#/components/responses/400" },
           "401": {
             "description": "Unauthorized error",
-                "required": [
-                  "title"
-                ],
-                "properties": {
-                  "title": {
-                    "description": "Board's name",
-                    "type": "string",
-                    "example": "Project 1"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Creates a new board",
             "content": {
               "application/json": {
                 "schema": {
@@ -1104,49 +1281,18 @@
                 }
               }
             }
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 201
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully created a board!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/boardSchema"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
     }
   },
-
   "components": {
     "schemas": {
       "RegisterUser": {
         "$ref": "#/components/schemas/registerUser"
       },
       "userSchema": {
-        "required": [
-          "_id",
-          "name",
-          "email",
-          "theme"
-        ],
+        "required": ["_id", "name", "email", "theme"],
         "properties": {
           "_id": {
             "type": "string",
@@ -1167,11 +1313,7 @@
           "theme": {
             "type": "string",
             "description": "Preferred theme of the user",
-            "enum": [
-              "light",
-              "dark",
-              "violet"
-            ],
+            "enum": ["light", "dark", "violet"],
             "example": "light"
           },
           "avatar": {
@@ -1182,13 +1324,7 @@
       },
       "boardSchema": {
         "type": "object",
-        "required": [
-          "_id",
-          "title",
-          "icon",
-          "background",
-          "owner"
-        ],
+        "required": ["_id", "title", "icon", "background", "owner"],
         "properties": {
           "_id": {
             "type": "string",
@@ -1230,11 +1366,7 @@
         }
       },
       "columnSchema": {
-        "required": [
-          "_id",
-          "title",
-          "boardId"
-        ],
+        "required": ["_id", "title", "boardId"],
         "properties": {
           "_id": {
             "type": "string",
@@ -1266,13 +1398,7 @@
         }
       },
       "cardSchema": {
-        "required": [
-          "_id",
-          "title",
-          "description",
-          "priority",
-          "columnId"
-        ],
+        "required": ["_id", "title", "description", "priority", "columnId"],
         "properties": {
           "_id": {
             "type": "string",
@@ -1292,12 +1418,7 @@
           "priority": {
             "type": "string",
             "description": "Priority level of the step",
-            "enum": [
-              "High",
-              "Medium",
-              "Low",
-              "Without priority"
-            ],
+            "enum": ["High", "Medium", "Low", "Without priority"],
             "example": "Without priority"
           },
           "columnId": {
@@ -1346,46 +1467,34 @@
         }
       }
     },
-
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
       }
     },
-
-    "schemas": {
-      "RegisterUser": {
-        "$ref": "#/components/schemas/registerUser"
-      },
-      "registerUser": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "John Doe",
-            "minLength": 3,
-            "maxLength": 30
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "john.doe@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "password123",
-            "minLength": 8
-          },
-          "theme": {
-            "type": "string",
-            "example": "light"
+    "responses": {
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["status", "message"],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Please check the provided data"
+                }
+              }
+            }
           }
         }
-      }
-    },
-    "responses": {
+      },
       "401": {
         "description": "Unauthorized error",
         "content": {
@@ -1393,9 +1502,6 @@
             "schema": {
               "type": "object",
               "required": ["status", "message", "data"],
-
-              "required": ["status", "message"],
-
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1416,106 +1522,17 @@
                   }
                 }
               }
-            },
-            "error": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Bad request"
-                },
-                "errors": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "securitySchemes": {
-            "bearerAuth": {
-              "type": "http",
-              "scheme": "bearer"
-            }
-          },
-          "responses": {
-            "400": {
-              "description": "Bad request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "required": ["status", "message"],
-                    "properties": {
-                      "status": {
-                        "type": "integer",
-                        "example": 400
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Please check the provided data"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
-                }
-              }
             }
           }
         }
       },
       "404": {
-        "description": "User Not Found",
+        "description": "Not Found",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1528,7 +1545,7 @@
                 "data": {
                   "type": "object",
                   "example": {
-                    "message": "User not found"
+                    "message": "Not found"
                   }
                 }
               }
