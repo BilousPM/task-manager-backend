@@ -1,16 +1,15 @@
-post:
-  operationId: 'logoutUser'
-  summary: 'Logout user and delete session'
-  security:
+tags:
+  - Auth
+summary: Ends the user session by deleting the session data.
+operationId: logoutUser
+description: Successfully logged out, no content returned.
+security:
     - bearerAuth: []
-  tags:
-    - 'Auth'
-  responses:
-    '204':
-      description: 'User logged out successfully'
-    '401':
-      description: 'Bad request. No session found.'
-      content:
-        application/json:
-          schema:
-            $ref: '../components/schemas/error.yaml'
+responses:
+  '204':
+    description: 'User logged out successfully'
+  '401':
+    $ref: '../../components/responses/responseErrorSchemas/401.yaml'
+
+
+

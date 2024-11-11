@@ -1,0 +1,50 @@
+tags:
+  - User
+summary: Update a theme
+operationId: patchTheme
+description: Partially updates a theme's information.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - theme
+        properties:
+          name:
+            type: string
+            example: dark
+            description: background theme name
+responses:
+  '200':
+    description: Successfully updated the theme.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Theme changed successfully
+            data:
+              type: object
+              properties:
+                theme:
+                  type: string
+                  example: dark
+                  enum: ["light", "dark", "violet"]
+                  description: Preferred theme of the user
+  '401':
+    $ref: ../../components/responses/responseErrorSchemas/401.yaml
+  '404':
+    $ref: ../../components/responses/responseErrorSchemas/404.yaml

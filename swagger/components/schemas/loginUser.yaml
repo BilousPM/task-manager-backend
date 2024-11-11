@@ -1,5 +1,13 @@
 type: 'object'
+required:
+  - _id
+  - email
+  - password
 properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: 66f8ce62907b1bc9bc45a365
   email:
     type: 'string'
     format: 'email'
@@ -7,6 +15,4 @@ properties:
   password:
     type: 'string'
     example: 'password123'
-required:
-  - email
-  - password
+

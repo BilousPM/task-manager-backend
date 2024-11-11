@@ -1,0 +1,27 @@
+required:
+  - _id
+  - title
+  - boardId
+properties:
+  _id:
+    type: string
+    description: Unique identifier for the column
+    example: "67305580e57ecb50c727d2ea"
+  title:
+    type: string
+    description: Title of the column
+    example: "To Do something more #1"
+  boardId:
+    type: string
+    description: Unique identifier of the board this column belongs to
+    example: "672babd7db3166fdaba54a5c"
+  createdAt:
+    type: string
+    format: date-time
+    description: Date and time when the column was created
+    example: "2024-11-10T06:41:04.611Z"
+  updatedAt:
+    type: string
+    format: date-time
+    description: Date and time when the column was last updated
+    example: "2024-11-10T06:41:04.611Z"

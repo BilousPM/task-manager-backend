@@ -1,35 +1,94 @@
-post:
-  operationId: 'registerUser'
-  summary: 'Register a new user'
-  security:
-    - bearerAuth: []
-  tags:
-    - 'Auth'
-  requestBody:
-    required: true
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: 'Create a New User'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            example: John Doe
+            description: The user's name.
+          email:
+            type: string
+            example: john.doe@example.com
+            description: The user's email address.
+          password:
+            type: string
+            example: password123
+            description: The user's password.
+responses:
+  '201':
+    description: Creates a new contact
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/registerUser.yaml'
-  responses:
-    '201':
-      description: 'User registered successfully'
-      content:
-        application/json:
-          schema:
-            type: 'object'
-            properties:
-              status:
-                type: 'integer'
-                example: 201
-              message:
-                type: 'string'
-                example: 'Successfully registered a user!'
-              data:
-                $ref: '../components/schemas/user.yaml'
-    '409':
-      description: 'Email in use'
-      content:
-        application/json:
-          schema:
-            $ref: '../components/schemas/error.yaml'
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: 672cdd90db9f029835cc2bdc
+                  description: User ID created by the database Mongo DB
+                name:
+                  type: string
+                  example: John Doe
+                  description: The user's name
+                email:
+                  type: string
+                  example: john.doe@example.com
+                  description: The user's email address.
+                theme:
+                  type: string
+                  example: light
+                  description: the application theme is selected by the User
+                  default: light
+  '400':
+    $ref: ../../components/responses/responseErrorSchemas/400.yaml
+  '409':
+    description: Response when email address is already in use in database
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: ConflictError
+            data:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: This email address already exists in the database and cannot be reused.
+
+
+

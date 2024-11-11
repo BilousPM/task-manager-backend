@@ -1,0 +1,23 @@
+tags:
+  - User
+summary: Delete a user
+operationId: deleteUser
+description: Deletes a user by its ID.
+security:
+  - bearerAuth: []
+responses:
+  '204':
+    description: Successfully deleted the user.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            -  message
+          properties:
+            message:
+              type: string
+              example: Successful operation
+  '404':
+    $ref: ../../components/responses/responseErrorSchemas/404.yaml
+

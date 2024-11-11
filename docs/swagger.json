@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://task-manager-backend-y4a1.onrender.com"
     }
   ],
   "tags": [
@@ -27,12 +27,277 @@
       "description": "Boards operations."
     },
     {
-      "name": "Support",
-      "description": "Operations about users support"
+      "name": "User",
+      "description": "User's operation."
     }
   ],
   "paths": {
-    "/user/{current}": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "description": "Create a New User",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe",
+                    "description": "The user's name."
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com",
+                    "description": "The user's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123",
+                    "description": "The user's password."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a new contact",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a contact!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "672cdd90db9f029835cc2bdc",
+                          "description": "User ID created by the database Mongo DB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe",
+                          "description": "The user's name"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com",
+                          "description": "The user's email address."
+                        },
+                        "theme": {
+                          "type": "string",
+                          "example": "light",
+                          "description": "the application theme is selected by the User",
+                          "default": "light"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "description": "Response when email address is already in use in database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "ConflictError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "This email address already exists in the database and cannot be reused."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user and create session",
+        "operationId": "loginUser",
+        "description": "Login user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com",
+                    "description": "The user's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123",
+                    "description": "The user's password."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "Z2jvmaNKNxdwAm85WDbqrA=="
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "672cdd90db9f029835cc2bdc",
+                              "description": "User ID created by the database Mongo DB"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "John Doe",
+                              "description": "The user's name"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "john.doe@example.com",
+                              "description": "The user's email address."
+                            },
+                            "password": {
+                              "type": "string",
+                              "example": "password123",
+                              "description": "The user's password."
+                            },
+                            "theme": {
+                              "type": "string",
+                              "example": "light",
+                              "description": "the application theme is selected by the user"
+                            },
+                            "avatarUrl": {
+                              "type": "string",
+                              "example": "https://res.cloudinary.com/denqnnmh2/image/upload/v1731087488/zn0arkh2mdtljnh5mhcf.webp\"",
+                              "description": "avatar uploaded by user (if user uploaded)"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Ends the user session by deleting the session data.",
+        "operationId": "logoutUser",
+        "description": "Successfully logged out, no content returned.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User logged out successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/current": {
       "get": {
         "tags": [
           "User"
@@ -43,18 +308,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "current",
-            "required": true,
-            "schema": {
-              "description": "MongoDB id",
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
           }
         ],
         "responses": {
@@ -76,11 +329,34 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found User with id 65ca67e7ae7f10c88b598384!"
+                      "example": "Successfully found User with id 65ca67e7ae7f10c88b598384 !"
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/userSchema"
+                        },
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/boardSchema"
+                          }
+                        },
+                        "columns": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/columnSchema"
+                          }
+                        },
+                        "cards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/cardSchema"
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -96,7 +372,7 @@
     "/user/profile": {
       "patch": {
         "tags": [
-          "Profile"
+          "User"
         ],
         "summary": "Partially update a profile",
         "operationId": "patchProfile",
@@ -106,36 +382,31 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "profile",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ID of the profile to update."
-          }
-        ],
         "requestBody": {
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the user",
+                    "example": "John Doe"
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john.doe@example.com",
+                    "description": "The user's email address."
                   },
                   "password": {
-                    "type": "string"
-                  },
-                  "avatarURL": {
                     "type": "string",
-                    "format": "binary"
+                    "example": "password123",
+                    "description": "The user's password"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "User's avatar image file"
                   }
                 }
               }
@@ -149,32 +420,34 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
-                      "type": "integer"
+                      "type": "integer",
+                      "example": 201
                     },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Profile updated successfully"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/user"
+                      "type": "object",
+                      "$ref": "#/components/schemas/userSchema"
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request."
-          },
           "401": {
-            "description": "Unauthorized."
+            "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Contact not found."
-          },
-          "500": {
-            "description": "Internal server error."
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -182,9 +455,9 @@
     "/user/theme": {
       "patch": {
         "tags": [
-          "Theme"
+          "User"
         ],
-        "summary": "Partially update a theme",
+        "summary": "Update a theme",
         "operationId": "patchTheme",
         "description": "Partially updates a theme's information.",
         "security": [
@@ -192,36 +465,20 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ID of the theme to update."
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "theme"
+                ],
                 "properties": {
                   "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  },
-                  "avatarURL": {
                     "type": "string",
-                    "format": "binary"
+                    "example": "dark",
+                    "description": "background theme name"
                   }
                 }
               }
@@ -235,32 +492,45 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
-                      "type": "integer"
+                      "type": "integer",
+                      "example": 200
                     },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Theme changed successfully"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/user"
+                      "type": "object",
+                      "properties": {
+                        "theme": {
+                          "type": "string",
+                          "example": "dark",
+                          "enum": [
+                            "light",
+                            "dark",
+                            "violet"
+                          ],
+                          "description": "Preferred theme of the user"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request."
-          },
           "401": {
-            "description": "Unauthorized."
+            "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Contact not found."
-          },
-          "500": {
-            "description": "Internal server error."
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -278,39 +548,40 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ID of the user to delete."
-          }
-        ],
         "responses": {
           "204": {
-            "description": "Successfully deleted the user."
-          },
-          "401": {
-            "description": "Unauthorized."
+            "description": "Successfully deleted the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successful operation"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Contact not found."
-          },
-          "500": {
-            "description": "Internal server error."
+            "$ref": "#/components/responses/404"
           }
         }
       }
     },
     "/support/send-message": {
       "post": {
-        "tags": ["Support"],
+        "tags": [
+          "Support"
+        ],
         "summary": "Send email to support",
         "operationId": "sendEmailToSupport",
-        "description": "Create a contact with payload",
+        "description": "Send Message to support",
         "security": [
           {
             "bearerAuth": []
@@ -318,10 +589,13 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "message"],
+                "required": [
+                  "email",
+                  "message"
+                ],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -344,30 +618,71 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 201
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a contact!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "example": "Hello, testuser@mail.com. The message sent to support"
                     }
                   }
                 }
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "400": {
+            "description": "When there are no emails or messages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email and message are required"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "404": {
-            "$ref": "#/components/responses/404"
+          "500": {
+            "description": "When the email was not sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to send the email, please try again later."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -727,38 +1042,217 @@
       }
     }
   },
-
   "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    },
     "schemas": {
-      "user": {
-        "type": "object",
-        "required": ["_id", "name"],
+      "RegisterUser": {
+        "$ref": "#/components/schemas/registerUser"
+      },
+      "userSchema": {
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "theme"
+        ],
         "properties": {
           "_id": {
-            "description": "User's id",
             "type": "string",
-            "example": "66f8ce62907b1bc9bc45a365"
+            "description": "Unique identifier for the user",
+            "example": "673058d9e57ecb50c727d306"
           },
           "name": {
-            "description": "User's name",
             "type": "string",
-            "example": "John Doe"
+            "description": "Full name of the user",
+            "example": "Bob Fox"
           },
           "email": {
-            "description": "User's email",
             "type": "string",
-            "example": "testcontact@mail.com"
+            "format": "email",
+            "description": "Email address of the user",
+            "example": "mrfox@gmail.com"
           },
-          "photo": {
-            "description": "Link to User's photo",
+          "theme": {
             "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+            "description": "Preferred theme of the user",
+            "enum": [
+              "light",
+              "dark",
+              "violet"
+            ],
+            "example": "light"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/denqnnmh2/image/upload/v1731267859/cfhq5utupyp2aowrlvoj.webp\""
+          }
+        }
+      },
+      "boardSchema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "icon",
+          "background",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique board identifier",
+            "example": "67305358e57ecb50c727d2e1"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board name",
+            "example": "Board #1"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Board icon",
+            "example": "default"
+          },
+          "background": {
+            "type": "string",
+            "description": "Blackboard background",
+            "example": "default"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Board owner ID",
+            "example": "67302f00ac49936cae898e30"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time the board was created",
+            "example": "2024-11-10T06:31:52.478Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time the board was last updated",
+            "example": "2024-11-10T06:31:52.478Z"
+          }
+        }
+      },
+      "columnSchema": {
+        "required": [
+          "_id",
+          "title",
+          "boardId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the column",
+            "example": "67305580e57ecb50c727d2ea"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the column",
+            "example": "To Do something more #1"
+          },
+          "boardId": {
+            "type": "string",
+            "description": "Unique identifier of the board this column belongs to",
+            "example": "672babd7db3166fdaba54a5c"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the column was created",
+            "example": "2024-11-10T06:41:04.611Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the column was last updated",
+            "example": "2024-11-10T06:41:04.611Z"
+          }
+        }
+      },
+      "cardSchema": {
+        "required": [
+          "_id",
+          "title",
+          "description",
+          "priority",
+          "columnId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the step",
+            "example": "673056fde57ecb50c727d2fd"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the step",
+            "example": "step 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the step",
+            "example": "Say Hello Everybody"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the step",
+            "enum": [
+              "High",
+              "Medium",
+              "Low",
+              "Without priority"
+            ],
+            "example": "Without priority"
+          },
+          "columnId": {
+            "type": "string",
+            "description": "Identifier of the column this step belongs to",
+            "example": "672bcf7343e2322b1b847fb3"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the step was created",
+            "example": "2024-11-10T06:47:25.565Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the step was last updated",
+            "example": "2024-11-10T06:47:25.565Z"
+          }
+        }
+      },
+      "registerUser": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe",
+            "minLength": 3,
+            "maxLength": 30
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "minLength": 8
+          },
+          "theme": {
+            "type": "string",
+            "example": "light"
           }
         }
       },
@@ -843,14 +1337,48 @@
         }
       }
     },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "responses": {
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Please check the provided data"
+                }
+              }
+            }
+          }
+        }
+      },
       "401": {
         "description": "Unauthorized error",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -862,7 +1390,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -876,12 +1406,16 @@
         }
       },
       "404": {
-        "description": "Not Found",
+        "description": "User Not Found",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -894,7 +1428,7 @@
                 "data": {
                   "type": "object",
                   "example": {
-                    "message": " not found"
+                    "message": "Contact not found"
                   }
                 }
               }

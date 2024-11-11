@@ -1,0 +1,38 @@
+  type: object
+  required:
+    - _id
+    - title
+    - icon
+    - background
+    - owner
+  properties:
+    _id:
+      type: string
+      description: Unique board identifier
+      example: "67305358e57ecb50c727d2e1"
+    title:
+      type: string
+      description: Board name
+      example: "Board #1"
+    icon:
+      type: string
+      description: Board icon
+      example: "default"
+    background:
+      type: string
+      description: Blackboard background
+      example: "default"
+    owner:
+      type: string
+      description: Board owner ID
+      example: "67302f00ac49936cae898e30"
+    createdAt:
+      type: string
+      format: date-time
+      description: Date and time the board was created
+      example: "2024-11-10T06:31:52.478Z"
+    updatedAt:
+      type: string
+      format: date-time
+      description: Date and time the board was last updated
+      example: "2024-11-10T06:31:52.478Z"
