@@ -1,4 +1,3 @@
-
 import path from 'node:path';
 
 export const ENV_VARS = {
@@ -10,9 +9,12 @@ export const MONGO_DB_VARS = {
   MONGODB_PASSWORD: 'MONGODB_PASSWORD',
   MONGODB_URL: 'MONGODB_URL',
   MONGODB_DB: 'MONGODB_DB',
-  CLOUDINARY_API_KEY: 'CLOUDINARY_API_KEY',
-  CLOUDINARY_API_SECRET: 'CLOUDINARY_API_SECRET',
-  CLOUDINARY_CLOUD_NAME: 'CLOUDINARY_CLOUD_NAME',
+  // CLOUDINARY_API_KEY: 'CLOUDINARY_API_KEY',
+  // CLOUDINARY_API_SECRET: 'CLOUDINARY_API_SECRET',
+  // CLOUDINARY_CLOUD_NAME: 'CLOUDINARY_CLOUD_NAME',
+  GOOGLE_OAUTH_CLIENT_ID: 'GOOGLE_OAUTH_CLIENT_ID',
+  GOOGLE_OAUTH_SECTRET: 'GOOGLE_OAUTH_SECTRET',
+  GOOGLE_OAUTH_REDIRECT_URI: 'GOOGLE_OAUTH_REDIRECT_URI',
 };
 
 export const CLOUDINARY = {
@@ -31,13 +33,10 @@ export const SMTP = {
 
 export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
 
-
 export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
-
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
 export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
-
 
 // export const SORT_ORDER = {
 //   ASC: 'asc',

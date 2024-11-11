@@ -5,7 +5,8 @@ import {
 } from '../constants/time.js';
 import { UserCollection } from '../db/models/user.js';
 import { SessionCollection } from '../db/models/session.js';
-
+import { verifyCode } from '../utils/googleOauth.js';
+import bcrypt from 'bcrypt';
 // ----- Find User By Email -----
 export const findUserByEmail = (email) => UserCollection.findOne({ email });
 
@@ -13,10 +14,11 @@ export const findUserByEmail = (email) => UserCollection.findOne({ email });
 export const findUserById = (userId) => UserCollection.findById(userId);
 
 // ----- User Register -----
-export const registerUser = (registrationData, password) => UserCollection.create({
-  ...registrationData,
-  password,
-});
+export const registerUser = (registrationData, password) =>
+  UserCollection.create({
+    ...registrationData,
+    password,
+  });
 
 // ----- Update User -----
 export const updateUser = (userData) => UserCollection.findOneAndUpdate();
@@ -38,6 +40,28 @@ export const createSession = async (userId) => {
 export const deleteSession = (sessionId) =>
   SessionCollection.deleteOne({ _id: sessionId });
 
+// ----- Verify Google Oauth -----
+export const verifyGoogleOauth = async (code) => {
+  const { email, name, picture } = await verifyCode(code);
+
+  let user = await UserCollection.findOne({ email });
+
+  if (!user) {
+    const password = await bcrypt.hash(randomBytes(40), 10);
+    user = await UserCollection.create({
+      name,
+      email,
+      avatarURL: picture,
+      password,
+    });
+  }
+  await SessionCollection.deleteOne({
+    userId: user._id,
+  });
+
+  const session = await createSession(user._id);
+  return session;
+};
 // ----- Refresh session -----
 // export const refreshSession = async (sessionId, sessionToken) => {
 //   const session = await SessionCollection.findOne({
@@ -66,3 +90,30 @@ export const deleteSession = (sessionId) =>
 //   });
 //   return newSession;
 // };
+
+
+// Google Oauth befor changes
+// export const getGoogleOauthLink = (req, res) => {
+//   return generateOauthLink();
+// };
+
+// export const verifyGoogleOauth = async (code) => {
+//   const { email, name, picture } = await verifyCode(code);
+
+//   let user = await UserCollection.findOne({ email });
+
+//   if (!user) {
+//     const password = await bcrypt.hash(randomBytes(40), 10);
+//     user = await UserCollection.create({
+//       name,
+//       email,
+//       avatarURL: picture,
+//       password,
+//     });
+//   }
+//   await SessionCollection.deleteOne({
+//     userId: user._id,
+//   });
+
+//   const session = await createSession(user._id);
+//   return session;

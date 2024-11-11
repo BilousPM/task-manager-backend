@@ -9,10 +9,17 @@ info:
 tags:
   - name: Auth
     description: Auth operations.
+  - name: User
+    description: User's operation.
+  - name: Support
+    description: Support operation.
+  - name: Boards
+    description: Board operation
 servers:
   - url: http://localhost:3000
   - url: https://task-manager-backend-y4a1.onrender.com
 paths:
+  # Auth
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
@@ -22,32 +29,36 @@ paths:
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
+  # User
+  /user/current:
+    get:
+      $ref: ../swagger/paths/user/getCurrent.yaml
+  /user/profile:
+    patch:
+      $ref: '../swagger/paths/user/updateProfile.yaml'
+  /user/theme:
+    patch:
+      $ref: '../swagger/paths/user/changeTheme.yaml'
+  /user/delete-user:
+    delete:
+      $ref: '../swagger/paths/user/deleteUser.yaml'
+  # Support
+  /support/send-message:
+    post:
+      $ref: '../swagger/paths/support/support.yaml'
+  # Boards
+  /boards:
+    post:
+      $ref: '../swagger/paths/boards/createBoard.yaml'
+  /boards/boardId:
+    get:
+      $ref: '../swagger/paths/boards/{id}/getBoardById.yaml'
+    patch:
+      $ref: '../swagger/paths/boards/{id}/updateBoard.yaml'
+    delete:
+      $ref: '../swagger/paths/boards/{id}/deleteBoard.yaml'
 
 
-  # /user/{current}:
-  #   get:
-  #     $ref: ../swagger/paths/user/current/get.yaml
-  # /user/profile:
-  #   patch:
-  #     $ref: ../swagger/paths/user/profile/patch.yaml
-  # /user/theme:
-  #   patch:
-  #     $ref: ../swagger/paths/user/theme/patch.yaml
-  # /user/delete-user:
-  #   delete:
-  #     $ref: ../swagger/paths/user/delete-user/delete.yaml
-  # /support/send-message:
-  #   post:
-  #     $ref: ../swagger/paths/support/post.yaml
-  # /auth/register:
-  #   post:
-  #     $ref: ../swagger/paths/auth/register.yaml
-  # /auth/login:
-  #   post:
-  #     $ref: ../swagger/paths/auth/post.yaml
-  # /auth/logout:
-  #   post:
-  #     $ref: ../swagger/paths/auth/logout.yaml
 components:
   schemas:
     # User:

@@ -1,19 +1,11 @@
 tags:
-  - Profile
+  - User
 summary: Partially update a profile
 operationId: patchProfile
 description: Partially updates a profile's information.
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: id
-    required: true
-    schema:
-      type: string
-    description: The ID of the profile to update.
 requestBody:
-  required: true
   content:
     multipart/form-data:
       schema:
@@ -21,13 +13,20 @@ requestBody:
         properties:
           name:
             type: string
+            description: "Name of the user"
+            example: John Doe
           email:
             type: string
+            example: john.doe@example.com
+            description: The user's email address.
           password:
             type: string
-          avatarURL:
+            example: password123
+            description: The user's password
+          avatar:
             type: string
             format: binary
+            description: "User's avatar image file"
 responses:
   '200':
     description: Successfully updated the profile.
@@ -35,18 +34,21 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
+              example: 201
             message:
               type: string
+              example: Profile updated successfully
             data:
-              $ref: ../../../components/schemas/user.yaml
-  '400':
-    description: Bad request.
+              type: object
+              $ref: ../../components/responses/responseSchemas/userSchema.yaml
   '401':
-    description: Unauthorized.
+    $ref: ../../components/responses/responseErrorSchemas/401.yaml
   '404':
-    description: Contact not found.
-  '500':
-    description: Internal server error.
+    $ref: ../../components/responses/responseErrorSchemas/404.yaml

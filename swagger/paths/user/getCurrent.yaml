@@ -1,0 +1,47 @@
+tags:
+  - User
+summary: Get User by id
+operationId: getUser
+description: 'Get User by id'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Get User by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found User with id 65ca67e7ae7f10c88b598384 !
+            data:
+              type: object
+              properties:
+                user:
+                  type: object
+                  $ref: '../../components/responses/responseSchemas/userSchema.yaml'
+                boards:
+                  type: array
+                  items:
+                    $ref: ../../components/responses/responseSchemas/boardSchema.yaml
+                columns:
+                  type: array
+                  items:
+                    $ref: '../../components/responses/responseSchemas/columnSchema.yaml'
+                cards:
+                  type: array
+                  items:
+                    $ref: ../../components/responses/responseSchemas/cardSchema.yaml
+  '401':
+    $ref: ../../components/responses/responseErrorSchemas/401.yaml
+
+

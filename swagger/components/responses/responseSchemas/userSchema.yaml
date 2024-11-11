@@ -1,0 +1,28 @@
+required:
+  - _id
+  - name
+  - email
+  - theme
+properties:
+  _id:
+    type: string
+    description: Unique identifier for the user
+    example: "673058d9e57ecb50c727d306"
+  name:
+    type: string
+    description: Full name of the user
+    example: "Bob Fox"
+  email:
+    type: string
+    format: email
+    description: Email address of the user
+    example: "mrfox@gmail.com"
+  theme:
+    type: string
+    description: Preferred theme of the user
+    enum: ["light", "dark", "violet"]
+    example: "light"
+  avatar:
+    type: string
+    example: https://res.cloudinary.com/denqnnmh2/image/upload/v1731267859/cfhq5utupyp2aowrlvoj.webp"
+

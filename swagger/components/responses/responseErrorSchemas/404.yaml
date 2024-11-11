@@ -17,4 +17,4 @@ content:
         data:
           type: object
           example:
-            message: 'User not found'
+            message: 'Not found'

@@ -1,0 +1,73 @@
+tags:
+  - Boards
+summary: Get board, columns, cards  by id
+operationId: getBoard
+description: 'Get board by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '67ca67e7ae7f10c88b598384'
+responses:
+  '200':
+    description: 'Get board with structure by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - title
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found board with id 67ca67e7ae7f10c88b598384!
+            data:
+              type: object
+              properties:
+                board:
+                  $ref: ../../../components/responses/responseSchemas/boardSchema.yaml
+                columnsAll:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - title
+                      - boardId
+                    properties:
+                      _id:
+                        type: string
+                        description: Unique identifier for the column
+                        example: "67305580e57ecb50c727d2ea"
+                      title:
+                        type: string
+                        description: Title of the column
+                        example: "To Do something more #1"
+                      boardId:
+                        type: string
+                        description: Unique identifier of the board this column belongs to
+                        example: "672babd7db3166fdaba54a5c"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date and time when the column was created
+                        example: "2024-11-10T06:41:04.611Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date and time when the column was last updated
+                        example: "2024-11-10T06:41:04.611Z"
+                      cards:
+                        items:
+                          $ref: '../../../components/responses/responseSchemas/cardSchema.yaml'
+  '404':
+    $ref: '../../../components/responses/responseErrorSchemas/404.yaml'

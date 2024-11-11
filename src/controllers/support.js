@@ -8,8 +8,13 @@ import handlebars from 'handlebars';
 
 export const sendSupportMessageController = async (req, res) => {
   const email = req.body.email;
+  const message = req.body.message;
   const supportEmail = "bilouspm@gmail.com";
   //  const supportEmail = "taskpro.project@gmail.com"
+  if (!email || !message) {
+    throw createHttpError(400, 'Email and message are required');
+  }
+
 
   const sendEmailTemplatePath = path.join(TEMPLATES_DIR, 'support-email.html');
 
@@ -20,10 +25,8 @@ export const sendSupportMessageController = async (req, res) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     email,
-    message: req.body.message
-
+    message
   });
-
 
   try {
     await sendEmailRequest({
@@ -42,6 +45,6 @@ export const sendSupportMessageController = async (req, res) => {
 
   res.json({
     status:200,
-    message: `Hello, ${email}. Thank you for contacting our support team. We have received your request and will get in touch with you shortly to provide all necessary assistance. Best regards, Support Team`
+    message: `Hello, ${email}. The message sent to support`
   });
 };

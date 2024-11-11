@@ -1,11 +1,12 @@
 import { UserCollection } from '../db/models/user.js';
 
-// ----- Update user Profile -----
+// ----- Update User Profile -----
 export const updateUserProfile = (_id, updateFields) => UserCollection.findByIdAndUpdate(_id, updateFields, {
   new: true,
 });
 
+// ----- Delete User -----
 export const deleteUser = async (req, res) => {
   const { _id } = req.user;
-  await UserCollection.findOneAndDelete({ _id });
+ return await UserCollection.findOneAndDelete({ _id });
 };

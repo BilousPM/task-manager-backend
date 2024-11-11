@@ -5,15 +5,21 @@ import {
   findUserByEmail,
   // refreshSession,
   registerUser,
+  verifyGoogleOauth,
 } from '../services/auth.js';
 import bcrypt from 'bcrypt';
 import { setupSessionCookies } from '../utils/setupSessionCookies.js';
+import { generateOauthLink } from '../utils/googleOauth.js';
 
 //  ----- User Register -----
 export const registerUserController = async (req, res) => {
-  const user  = await findUserByEmail(req.body.email);
+  const user = await findUserByEmail(req.body.email);
 
-  if (user) throw createHttpError(409, 'This email address already exists in the database and cannot be reused.');
+  if (user)
+    throw createHttpError(
+      409,
+      'This email address already exists in the database and cannot be reused.',
+    );
 
   const password = await bcrypt.hash(req.body.password, 10);
   const newUser = await registerUser(req.body, password);
@@ -44,7 +50,7 @@ export const loginUserController = async (req, res) => {
     message: 'Saccessfully logged in!',
     data: {
       accessToken: session.accessToken,
-      user
+      user,
     },
   });
 };
@@ -59,6 +65,30 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+};
+
+// ----- Request GoogleOauth Url -----
+export const requestGoogleOauthUrlController = (req, res) => {
+  const link = generateOauthLink();
+
+  res.json({
+    status: 200,
+    message: 'Successfully requested oauth link!',
+    data: { link },
+  });
+};
+
+// ----- Verify Google Oauth -----
+export const verifyGoogleOauthControler = async (req, res) => {
+  const session = await verifyGoogleOauth(req.body.code);
+
+  setupSessionCookies(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully loged in via Google Oauth!',
+    data: { accessToken: session.accessToken },
+  });
 };
 
 // ----- Refresh Session -----
@@ -84,4 +114,29 @@ export const logoutUserController = async (req, res) => {
 //       data: { message: error.message },
 //     });
 //   }
+// };
+
+// Google Oauth befor changes
+// // ----- Request GoogleOauth Url -----
+// export const requestGoogleOauthUrlController = (req, res) => {
+//   const link = getGoogleOauthLink();
+
+//   res.json({
+//     status: 200,
+//     message: 'Successfully requested oauth link!',
+//     data: { link },
+//   });
+// };
+
+// // ----- Verify Google Oauth -----
+// export const verifyGoogleOauthControler = async (req, res) => {
+//   const session = await verifyGoogleOauth(req.body.code);
+
+//   setupSessionCookies(res, session);
+
+//   res.json({
+//     status: 200,
+//     message: 'Successfully loged in via Google Oauth!',
+//     data: { accessToken: session.accessToken },
+//   });
 // };

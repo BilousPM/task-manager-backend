@@ -1,12 +1,6 @@
-// src/services/boards.js
-
 import { BoardsCollection } from '../db/models/board.js';
 import { ColumnsCollection } from '../db/models/columns.js';
 import { CardsCollection } from '../db/models/card.js';
-//import createHttpError from 'http-errors';
-//import { faker } from '@faker-js/faker';
-//import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-//import { SORT_ORDER } from '../constants/index.js';
 
 // ----- Create Board -----
 export const createBoard = (payload, user) => BoardsCollection.create({
@@ -17,13 +11,11 @@ export const createBoard = (payload, user) => BoardsCollection.create({
   // ----- Get Board By Id -----
   export const getBoardById = (boardId) => BoardsCollection.findById(boardId);
 
-
-
 // ----- Get All Boards By User Id -----
 export const getAllBoards = (owner) =>  BoardsCollection.find({ owner});
 
 
-
+// ----- Get All Columns By BoardId -----
 export const getAllColumnsByBoardId = async (boardId, user) => {
   const columns = await ColumnsCollection.find({
     boardId: boardId,
@@ -32,6 +24,7 @@ export const getAllColumnsByBoardId = async (boardId, user) => {
   return columns;
 };
 
+// ----- Get All Cards By BoardId -----
 export const getAllCardsByBoardId = async (boardId, user) => {
   const cards = await CardsCollection.find({
     boardId: boardId,
@@ -68,25 +61,3 @@ export const deleteBoard = async (boardId) => {
 
   return board;
 };
-
-// =========================== Servises що були зміннені ================
-
-// export const createBoard = async (payload, user, photoUrl) => {
-//   const board = await BoardsCollection.create({
-//     ...payload,
-//     owner: user._id,
-//     background: photoUrl,
-//   });
-
-//   return board;
-// };
-
-
-// export const getBoardById = async (boardId, user) => {
-//   const board = await BoardsCollection.findById(boardId);
-//   if (board.owner.toString() === user._id.toString()) {
-//     return board;
-//   } else {
-//     return;
-//   }
-// };

@@ -21,6 +21,18 @@
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "User",
+      "description": "User's operation."
+    },
+    {
+      "name": "Support",
+      "description": "Support operation."
+    },
+    {
+      "name": "Boards",
+      "description": "Board operation"
     }
   ],
   "paths": {
@@ -84,6 +96,29 @@
                       "type": "object",
                       "$ref": "#/components/schemas/user",
                       "$ref": "#/components/schemas/registerUser"
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "672cdd90db9f029835cc2bdc",
+                          "description": "User ID created by the database Mongo DB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe",
+                          "description": "The user's name"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com",
+                          "description": "The user's email address."
+                        },
+                        "theme": {
+                          "type": "string",
+                          "example": "light",
+                          "description": "the application theme is selected by the User",
+                          "default": "light"
+                        }
+                      }
                     }
                   }
                 }
@@ -237,6 +272,7 @@
                 }
               }
             }
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -258,11 +294,394 @@
             "description": "User logged out successfully"
           },
           "401": {
-            "description": "Bad request. No session found.",
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User by id",
+        "operationId": "getUser",
+        "description": "Get User by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get User by id",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/error"
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found User with id 65ca67e7ae7f10c88b598384 !"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/userSchema"
+                        },
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/boardSchema"
+                          }
+                        },
+                        "columns": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/columnSchema"
+                          }
+                        },
+                        "cards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/cardSchema"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/profile": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Partially update a profile",
+        "operationId": "patchProfile",
+        "description": "Partially updates a profile's information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the user",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com",
+                    "description": "The user's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123",
+                    "description": "The user's password"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "User's avatar image file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Profile updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/userSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user/theme": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a theme",
+        "operationId": "patchTheme",
+        "description": "Partially updates a theme's information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "theme"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "dark",
+                    "description": "background theme name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the theme.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Theme changed successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "theme": {
+                          "type": "string",
+                          "example": "dark",
+                          "enum": [
+                            "light",
+                            "dark",
+                            "violet"
+                          ],
+                          "description": "Preferred theme of the user"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user/delete-user": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "operationId": "deleteUser",
+        "description": "Deletes a user by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successful operation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/support/send-message": {
+      "post": {
+        "tags": [
+          "Support"
+        ],
+        "summary": "Send email to support",
+        "operationId": "sendEmailToSupport",
+        "description": "Send Message to support",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "message"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "testuser@mail.com"
+                  },
+                  "message": {
+                    "description": "Message that will be sent to support",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a contact",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Hello, testuser@mail.com. The message sent to support"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When there are no emails or messages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email and message are required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When the email was not sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to send the email, please try again later."
+                    }
+                  }
                 }
               }
             }
@@ -286,6 +705,14 @@
           }
         ],
         "operationId": "addColumn",
+    "/boards": {
+      "post": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Create board",
+        "operationId": "createBoard",
+        "description": "Create a board with user id",
         "security": [
           {
             "bearerAuth": []
@@ -493,6 +920,23 @@
           "400": { "$ref": "#/components/responses/400" },
           "401": {
             "description": "Unauthorized error",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "description": "Board's name",
+                    "type": "string",
+                    "example": "Project 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a new board",
             "content": {
               "application/json": {
                 "schema": {
@@ -660,6 +1104,31 @@
                 }
               }
             }
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a board!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/boardSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -670,6 +1139,185 @@
     "schemas": {
       "RegisterUser": {
         "$ref": "#/components/schemas/registerUser"
+      },
+      "userSchema": {
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "theme"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the user",
+            "example": "673058d9e57ecb50c727d306"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the user",
+            "example": "Bob Fox"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the user",
+            "example": "mrfox@gmail.com"
+          },
+          "theme": {
+            "type": "string",
+            "description": "Preferred theme of the user",
+            "enum": [
+              "light",
+              "dark",
+              "violet"
+            ],
+            "example": "light"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/denqnnmh2/image/upload/v1731267859/cfhq5utupyp2aowrlvoj.webp\""
+          }
+        }
+      },
+      "boardSchema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "icon",
+          "background",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique board identifier",
+            "example": "67305358e57ecb50c727d2e1"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board name",
+            "example": "Board #1"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Board icon",
+            "example": "default"
+          },
+          "background": {
+            "type": "string",
+            "description": "Blackboard background",
+            "example": "default"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Board owner ID",
+            "example": "67302f00ac49936cae898e30"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time the board was created",
+            "example": "2024-11-10T06:31:52.478Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time the board was last updated",
+            "example": "2024-11-10T06:31:52.478Z"
+          }
+        }
+      },
+      "columnSchema": {
+        "required": [
+          "_id",
+          "title",
+          "boardId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the column",
+            "example": "67305580e57ecb50c727d2ea"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the column",
+            "example": "To Do something more #1"
+          },
+          "boardId": {
+            "type": "string",
+            "description": "Unique identifier of the board this column belongs to",
+            "example": "672babd7db3166fdaba54a5c"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the column was created",
+            "example": "2024-11-10T06:41:04.611Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the column was last updated",
+            "example": "2024-11-10T06:41:04.611Z"
+          }
+        }
+      },
+      "cardSchema": {
+        "required": [
+          "_id",
+          "title",
+          "description",
+          "priority",
+          "columnId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the step",
+            "example": "673056fde57ecb50c727d2fd"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the step",
+            "example": "step 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the step",
+            "example": "Say Hello Everybody"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the step",
+            "enum": [
+              "High",
+              "Medium",
+              "Low",
+              "Without priority"
+            ],
+            "example": "Without priority"
+          },
+          "columnId": {
+            "type": "string",
+            "description": "Identifier of the column this step belongs to",
+            "example": "672bcf7343e2322b1b847fb3"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the step was created",
+            "example": "2024-11-10T06:47:25.565Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the step was last updated",
+            "example": "2024-11-10T06:47:25.565Z"
+          }
+        }
       },
       "registerUser": {
         "type": "object",
@@ -694,25 +1342,6 @@
           "theme": {
             "type": "string",
             "example": "light"
-          }
-        }
-      },
-      "error": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 400
-          },
-          "message": {
-            "type": "string",
-            "example": "Bad request"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         }
       }
@@ -832,6 +1461,74 @@
                         "example": "Please check the provided data"
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "User Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
                   }
                 }
               }

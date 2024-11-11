@@ -1,0 +1,77 @@
+tags:
+  - Support
+summary: Send email to support
+operationId: sendEmailToSupport
+description: 'Send Message to support'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - message
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: testuser@mail.com
+          message:
+            description: "Message that will be sent to support"
+            type: string
+responses:
+  '201':
+    description: Creates a contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Hello, testuser@mail.com. The message sent to support
+  '400':
+    description: When there are no emails or messages
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Email and message are required
+  '500':
+    description: When the email was not sent
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: Failed to send the email, please try again later.
+
+
+
+
+

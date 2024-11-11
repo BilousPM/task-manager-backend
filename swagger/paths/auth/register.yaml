@@ -46,9 +46,26 @@ responses:
               example: Successfully created a contact!
             data:
               type: object
-              $ref: ../../components/schemas/registerUser.yaml
+              properties:
+                _id:
+                  type: string
+                  example: 672cdd90db9f029835cc2bdc
+                  description: User ID created by the database Mongo DB
+                name:
+                  type: string
+                  example: John Doe
+                  description: The user's name
+                email:
+                  type: string
+                  example: john.doe@example.com
+                  description: The user's email address.
+                theme:
+                  type: string
+                  example: light
+                  description: the application theme is selected by the User
+                  default: light
   '400':
-    $ref: ../../components/responses/400.yaml
+    $ref: ../../components/responses/responseErrorSchemas/400.yaml
   '409':
     description: Response when email address is already in use in database
     content:

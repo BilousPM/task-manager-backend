@@ -1,0 +1,55 @@
+tags:
+  - Boards
+summary: Update board by id
+operationId: putchBoard
+description: 'Update board by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '67ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          title:
+            description: "Board's name"
+            type: string
+            example: 'Project 1'
+          background:
+            description: 'background images'
+            type: string
+            example: 'black'
+          icon:
+            description: "Board's icon"
+            type: string
+            example: 'board icon modern'
+responses:
+  '200':
+    description: Creates a board
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated a board with Id 6731c3311073caeedf7353b6!
+            data:
+              type: object
+              $ref: '../../../components/responses/responseSchemas/boardSchema.yaml'
+  '404':
+    $ref: ../../../components/responses/responseErrorSchemas/404.yaml
