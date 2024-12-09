@@ -71,3 +71,6 @@ theme
   Need Help
   "- Реалізувати можливість відправки листа з коментарем про допомогу на адресу - taskpro.project@gmail.com
   в листі передати коментар користувача і ємейл, на який повертати відповідь."
+
+FrontEnd :
+https://www.figma.com/design/fJF13s2UlxPIwTMcPVrSiz/TaskPro?node-id=111-1212&node-type=frame&t=U3MKfFBhki8HlkM5-0
